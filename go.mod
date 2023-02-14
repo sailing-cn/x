@@ -1,4 +1,4 @@
-module x
+module sailing.cn
 
 go 1.19
 

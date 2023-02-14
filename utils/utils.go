@@ -17,10 +17,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sailing.cn/wrong"
 	"strconv"
 	"strings"
 	"time"
-	"x/wrong"
 )
 
 // Timestamp 时间戳
