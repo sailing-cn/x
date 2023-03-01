@@ -1,7 +1,7 @@
 package ffmpeg
 
 import (
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 	ffmpeg "github.com/u2takey/ffmpeg-go"
 )
 
