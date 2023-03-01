@@ -7,11 +7,11 @@ import (
 	"os/exec"
 )
 
-func StartNewThread(path string) bool {
+func StartNewThread(path string) error {
 	cmd := exec.Command("cmd.exe", "/C", "start", "/b", path)
 	if err := cmd.Run(); err != nil {
 		log.Println("Error", err)
-		return false
+		return err
 	}
-	return true
+	return nil
 }
