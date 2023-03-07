@@ -28,3 +28,18 @@ func (c *ClientService) ListClient(query *ClientPageQuery) (*sdk.PageResponse[Cl
 	}
 	return result, nil
 }
+
+func (c *ClientService) KickClient(clientId string) error {
+	param := make(map[string]string)
+	param["clientid"] = clientId
+	resp, err := c.Client.R().
+		SetPathParams(param).
+		Delete(c.Client.RequestURL(CLIENT_URL))
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != http.StatusNoContent {
+		return errors.New(fmt.Sprintf("服务端返回状态码:%d", resp.StatusCode))
+	}
+	return nil
+}
