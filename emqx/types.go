@@ -45,6 +45,11 @@ type Result struct {
 	Data interface{} `json:"data"`
 	Code Code        `json:"code"`
 }
+
+type PageQuery struct {
+	Page  int32 `json:"page"`
+	Limit int32 `json:"limit"`
+}
 type Resource struct {
 	Id     string                 `json:"id"`
 	Type   string                 `json:"type"`

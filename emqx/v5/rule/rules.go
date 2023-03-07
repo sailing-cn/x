@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"sailing.cn/emqx/v5/client"
+	sdk "sailing.cn/emqx/v5/http"
 	"sailing.cn/utils"
 )
 
@@ -12,7 +12,7 @@ const (
 	rulesURL = "/rules"
 )
 
-type RuleService client.Service
+type RuleService sdk.Service
 
 type EMQXRule struct {
 	// The ID of the rule
@@ -80,8 +80,8 @@ func (c *RuleService) GetRule(ruleId string) (rule *EMQXRule, err error) {
 }
 
 // ListRule 规则列表
-func (c *RuleService) ListRule(query *RuleQuery) (*client.PageResponse[EMQXRule], error) {
-	result := new(client.PageResponse[EMQXRule])
+func (c *RuleService) ListRule(query *RuleQuery) (*sdk.PageResponse[EMQXRule], error) {
+	result := new(sdk.PageResponse[EMQXRule])
 	_query := utils.ToMapStr(*query)
 	resp, err := c.Client.R().
 		SetQueryParams(_query).

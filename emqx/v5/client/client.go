@@ -1,36 +1,30 @@
 package client
 
 import (
-	"github.com/imroc/req/v3"
-	"net/url"
-	"sailing.cn/emqx/v5/config"
+	"errors"
+	"fmt"
+	"net/http"
+	sdk "sailing.cn/emqx/v5/http"
+	"sailing.cn/utils"
 )
 
-type APIClient struct {
-	cfg      *config.Configuration
-	BasePath *url.URL
-	client   *req.Client
-}
+const (
+	CLIENT_URL = "/clients"
+)
 
-type Service struct {
-	Client *APIClient
-}
+type ClientService sdk.Service
 
-func NewAPIClient(cfg *config.Configuration) *APIClient {
-	c := &APIClient{}
-	c.cfg = cfg
-	c.BasePath, _ = url.Parse(cfg.Server + "/api/" + cfg.ApiVersion)
-	c.client = req.C()
-	c.client.SetBaseURL(c.BasePath.String())
-	return c
-}
-
-func (c *APIClient) RequestURL(route string) string {
-	u := *c.BasePath
-	u.Path = u.Path + route
-	return u.String()
-}
-
-func (c *APIClient) R() *req.Request {
-	return c.client.R().SetBasicAuth(c.cfg.ApiKey, c.cfg.ApiSecret)
+func (c *ClientService) ListClient(query *ClientPageQuery) (*sdk.PageResponse[ClientResponse], error) {
+	result := new(sdk.PageResponse[ClientResponse])
+	_query := utils.ToMapStr(*query)
+	resp, err := c.Client.R().
+		SetQueryParams(_query).
+		SetResult(&result).Get(c.Client.RequestURL(CLIENT_URL))
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode != http.StatusOK {
+		return nil, errors.New(fmt.Sprintf("服务端返回状态码:%d", resp.StatusCode))
+	}
+	return result, nil
 }

@@ -6,14 +6,14 @@ import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"net/http"
-	"sailing.cn/emqx/v5/client"
+	sdk "sailing.cn/emqx/v5/http"
 	"sailing.cn/wrong"
 	"strings"
 )
 
 const bridgeURL = "/bridges"
 
-type BridgeService client.Service
+type BridgeService sdk.Service
 
 // Bridge  目前均是 WebHook形式
 type Bridge struct {
@@ -41,10 +41,10 @@ type Bridge struct {
 	Type string `json:"type"` //桥接类型
 	URL  string `json:"url"`  //桥接地址
 
-	Metrics     client.Metrics `json:"metrics"`
+	Metrics     sdk.Metrics `json:"metrics"`
 	NodeMetrics []struct {
-		Metrics client.Metrics `json:"metrics"`
-		Node    string         `json:"node"`
+		Metrics sdk.Metrics `json:"metrics"`
+		Node    string      `json:"node"`
 	} `json:"node_metrics"`
 }
 

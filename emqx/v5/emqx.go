@@ -5,12 +5,14 @@ import (
 	"sailing.cn/emqx/v5/bridge"
 	"sailing.cn/emqx/v5/client"
 	"sailing.cn/emqx/v5/config"
+	"sailing.cn/emqx/v5/http"
 	"sailing.cn/emqx/v5/rule"
 )
 
 type EmqxClient struct {
 	RuleService   *rule.RuleService
 	BridgeService *bridge.BridgeService
+	ClientService *client.ClientService
 }
 
 //api key: 90977a6223e6a1be
@@ -31,8 +33,9 @@ func NewEmqxClient() *EmqxClient {
 
 func NewEmqxClientWithCnf(cfg *config.Configuration) *EmqxClient {
 	e := &EmqxClient{}
-	_client := client.NewAPIClient(cfg)
+	_client := http.NewAPIClient(cfg)
 	e.RuleService = &rule.RuleService{Client: _client}
 	e.BridgeService = &bridge.BridgeService{Client: _client}
+	e.ClientService = &client.ClientService{Client: _client}
 	return e
 }
