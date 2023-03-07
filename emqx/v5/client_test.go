@@ -24,10 +24,22 @@ var (
 func TestListClient(t *testing.T) {
 	cfg := local
 	emqx := NewEmqxClientWithCnf(cfg)
-	list, err := emqx.ClientService.ListClient(&client.ClientQuery{})
+	k := client.ClientQuery{LikeClientId: "IOT"}
+	list, err := emqx.ClientService.ListClient(&client.ClientPageQuery{
+		ClientQuery: k,
+	})
 	if err != nil {
 		t.Errorf(err.Error())
 	} else {
 		t.Logf("%v", list)
+	}
+}
+
+func TestKickClient(t *testing.T) {
+	cfg := local
+	emqx := NewEmqxClientWithCnf(cfg)
+	err := emqx.ClientService.KickClient("IOT_PLATFORM_0_0_2023021217")
+	if err != nil {
+		t.Errorf(err.Error())
 	}
 }

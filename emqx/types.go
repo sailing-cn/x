@@ -47,8 +47,8 @@ type Result struct {
 }
 
 type PageQuery struct {
-	Page  int32 `json:"page"`
-	Limit int32 `json:"limit"`
+	Page  int32 `json:"page,omitempty"`
+	Limit int32 `json:"limit,omitempty"`
 }
 type Resource struct {
 	Id     string                 `json:"id"`

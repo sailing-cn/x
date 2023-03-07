@@ -156,19 +156,19 @@ type ClientResponse struct {
 }
 
 type ClientQuery struct {
-	Node           string `json:"node"`
-	Username       string `json:"username"`
-	Zone           string `json:"zone"`
-	IpAddress      string `json:"ip_address"`
-	ConnState      string `json:"conn_state"`
-	CleanStart     string `json:"clean_start"`
-	ProtoVer       string `json:"proto_ver"`
-	LikeClientId   string `json:"like_clientid"`
-	LikeUsername   string `json:"like_username"`
-	GteCreatedAt   string `json:"gte_created_at"`
-	LteCreatedAt   string `json:"lte_created_at"`
-	GteConnectedAt string `json:"gte_connected_at"`
-	LteConnectedAt string `json:"lte_connected_at"`
+	Node           string `json:"node,omitempty"`
+	Username       string `json:"username,omitempty"`
+	Zone           string `json:"zone,omitempty"`
+	IpAddress      string `json:"ip_address,omitempty"`
+	ConnState      string `json:"conn_state,omitempty"`
+	CleanStart     string `json:"clean_start,omitempty"`
+	ProtoVer       string `json:"proto_ver,omitempty"`
+	LikeClientId   string `json:"like_clientid,omitempty"`
+	LikeUsername   string `json:"like_username,omitempty"`
+	GteCreatedAt   string `json:"gte_created_at,omitempty"`
+	LteCreatedAt   string `json:"lte_created_at,omitempty"`
+	GteConnectedAt string `json:"gte_connected_at,omitempty"`
+	LteConnectedAt string `json:"lte_connected_at,omitempty"`
 }
 
 type ClientPageQuery struct {

@@ -30,11 +30,8 @@ func (c *ClientService) ListClient(query *ClientPageQuery) (*sdk.PageResponse[Cl
 }
 
 func (c *ClientService) KickClient(clientId string) error {
-	param := make(map[string]string)
-	param["clientid"] = clientId
 	resp, err := c.Client.R().
-		SetPathParams(param).
-		Delete(c.Client.RequestURL(CLIENT_URL))
+		Delete(c.Client.RequestURL(fmt.Sprintf("%s/%s", CLIENT_URL, clientId)))
 	if err != nil {
 		return err
 	}
