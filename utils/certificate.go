@@ -22,8 +22,8 @@ func GetCertificateInfo(content string) CertificateInfo {
 	result.CommonName = x509Cert.Issuer.CommonName
 	result.VerifyCode = x509Cert.Subject.CommonName
 	result.Owner = x509Cert.Issuer.String()
-	result.EffectiveDate = x509Cert.NotBefore.Unix()
-	result.ExpiryDate = x509Cert.NotAfter.Unix()
+	result.EffectiveDate = x509Cert.NotBefore.UnixMilli()
+	result.ExpiryDate = x509Cert.NotAfter.UnixMilli()
 	result.Md5 = GetMd5Value(content)
 	return result
 }

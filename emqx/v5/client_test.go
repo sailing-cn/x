@@ -4,6 +4,7 @@ import (
 	"sailing.cn/emqx/v5/client"
 	"sailing.cn/emqx/v5/config"
 	"testing"
+	"time"
 )
 
 var (
@@ -22,6 +23,8 @@ var (
 )
 
 func TestListClient(t *testing.T) {
+	k1 := time.Now().UnixMilli()
+	println(k1)
 	cfg := local
 	emqx := NewEmqxClientWithCnf(cfg)
 	k := client.ClientQuery{LikeClientId: "IOT"}
