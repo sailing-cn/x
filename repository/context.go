@@ -13,6 +13,7 @@ import (
 	"sailing.cn/pager"
 	"sailing.cn/repository/ch"
 	conf "sailing.cn/repository/conf.d"
+	"sailing.cn/repository/dm"
 	"sailing.cn/repository/mysql"
 	"sailing.cn/repository/sqlite"
 	"sailing.cn/utils"
@@ -45,6 +46,8 @@ func new() {
 		break
 	case "sqlite":
 		_context.DB = sqlite.NewSqlite(cnf)
+	case "dm":
+		_context.DB = dm.NewDm(cnf)
 	default:
 		log.Errorf("暂不支持该数据类型:%s", cnf.Db.Type)
 		break
