@@ -7,6 +7,7 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/eclipse/paho.mqtt.golang v1.4.2
+	github.com/emirpasic/gods v1.18.1
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-gonic/gin v1.9.0
 	github.com/glebarez/sqlite v1.7.0
@@ -26,6 +27,7 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	github.com/swaggo/files v1.0.0
 	github.com/swaggo/gin-swagger v1.5.3
+	github.com/thoas/go-funk v0.9.3
 	github.com/u2takey/ffmpeg-go v0.4.1
 	github.com/xuri/excelize/v2 v2.7.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.40.0
