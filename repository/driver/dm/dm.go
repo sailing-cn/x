@@ -13,6 +13,7 @@ import (
 	"gorm.io/gorm/utils"
 	"regexp"
 	"sailing.cn/repository/driver/dm/clauses"
+	_ "sailing.cn/repository/driver/dm/dmr"
 	"strconv"
 	"strings"
 )
