@@ -69,6 +69,10 @@ func (c *Context) Context(ctx context.Context) *Context {
 	return &Context{c.DB.WithContext(ctx)}
 }
 
+func InitWithCnf(_cnf *conf.Config) {
+	cnf = _cnf
+}
+
 func Init() {
 	path := filepath.Join(utils.GetExecPath(), "conf.d", "conf.yml")
 	file, err := ioutil.ReadFile(path)
