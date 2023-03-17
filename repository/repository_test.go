@@ -1,11 +1,8 @@
 package repository
 
 import (
-	"gorm.io/gorm"
 	conf_d "sailing.cn/repository/conf.d"
-	dmSchema "sailing.cn/repository/driver/dm/schema"
 	"testing"
-	"time"
 )
 
 func TestDm(t *testing.T) {
@@ -15,14 +12,22 @@ func TestDm(t *testing.T) {
 		Type:       "dm",
 		Debug:      true,
 	}})
-	GetContext().AutoMigrate(&User{})
+	GetContext().AutoMigrate(&Client{})
 }
 
-type User struct {
-	gorm.Model
-	Key      string `gorm:"index:key,unique"`
-	Name     string `gorm:"index:name"`
-	Age      int
-	Content  dmSchema.Clob `gorm:"size:1024000"`
-	Birthday time.Time
+//type User struct {
+//	gorm.Model
+//	Key      string `gorm:"index:key,unique"`
+//	Name     string `gorm:"index:name"`
+//	Age      int
+//	Content  dmSchema.Clob `gorm:"size:1024000"`
+//	Birthday time.Time
+//}
+
+type Client struct {
+	Id           string `json:"id,omitempty" gorm:"index:key,unique;type:varchar(255);primaryKey;"` //
+	Name         string `json:"name,omitempty" gorm:"type:varchar(255)"`                            //
+	Icon         string `json:"icon,omitempty" gorm:"type:varchar(255)"`                            //
+	Isv          string `json:"isv,omitempty" gorm:"type:varchar(255)"`                             //
+	CreationTime int64  `json:"creation_time,omitempty" gorm:"type:bigint"`                         //
 }
