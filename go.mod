@@ -3,18 +3,17 @@ module sailing.cn
 go 1.19
 
 require (
+	gitee.com/chunanyong/dm v1.8.11
 	github.com/bradfitz/gomemcache v0.0.0-20230124162541-5f7a7d875746
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/eclipse/paho.mqtt.golang v1.4.2
-	github.com/emirpasic/gods v1.18.1
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-gonic/gin v1.9.0
 	github.com/glebarez/sqlite v1.7.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golang/glog v1.0.0
-	github.com/golang/snappy v0.0.4
 	github.com/gookit/event v1.0.6
 	github.com/gorhill/cronexpr v0.0.0-20180427100037-88b0669f7d75
 	github.com/gorilla/websocket v1.5.0
@@ -28,7 +27,6 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	github.com/swaggo/files v1.0.0
 	github.com/swaggo/gin-swagger v1.5.3
-	github.com/thoas/go-funk v0.9.3
 	github.com/u2takey/ffmpeg-go v0.4.1
 	github.com/xuri/excelize/v2 v2.7.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.40.0
@@ -38,7 +36,6 @@ require (
 	go.opentelemetry.io/otel/sdk v1.14.0
 	go.opentelemetry.io/otel/trace v1.14.0
 	golang.org/x/crypto v0.5.0
-	golang.org/x/text v0.7.0
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/yaml.v3 v3.0.1
@@ -81,6 +78,7 @@ require (
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/pprof v0.0.0-20221118152302-e6195bd50e26 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -131,6 +129,7 @@ require (
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	golang.org/x/tools v0.2.0 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
