@@ -9,7 +9,6 @@ import (
 func MapTo(input interface{}, out interface{}) error {
 	metadata := &mapstructure.Metadata{}
 	err := mapstructure.DecodeMetadata(input, out, metadata)
-	//fmt.Printf("keys:%#v unused:%#v\n", metadata.Keys, metadata.Unused)
 	return err
 }
 
@@ -74,25 +73,9 @@ func MapToProtoMessage(input interface{}, out interface{}) error {
 	return decoder.Decode(input)
 }
 
-func MapToProtoMessageList[T interface{}](input interface{}, out interface{}) error {
-	if input == nil {
-		return nil
-	}
-	list := input.([]*interface{})
-	result := out.([]*interface{})
-	for _, item := range list {
-		var m T
-		MapToProtoMessage(item, &m)
-		result = append(result)
-	}
-	out = result
-	return nil
-}
-
 func protoDecoderHook(f, t reflect.Type, data interface{}) (interface{}, error) {
 	from := f.String()
 	to := t.String()
-	log.Errorf("from类型:%s to类型:%s", from, to)
 	if data == nil {
 		return nil, nil
 	}
