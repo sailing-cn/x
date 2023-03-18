@@ -78,8 +78,8 @@ func MapToProtoMessageList[T interface{}](input interface{}, out interface{}) er
 	if input == nil {
 		return nil
 	}
-	list := input.([]interface{})
-	result := out.([]interface{})
+	list := input.([]*interface{})
+	result := out.([]*interface{})
 	for _, item := range list {
 		var m T
 		MapToProtoMessage(item, &m)
