@@ -74,15 +74,18 @@ func MapToProtoMessage(input interface{}, out interface{}) error {
 	return decoder.Decode(input)
 }
 
-func MapToProtoMessageList[T interface{}](input []interface{}, out []interface{}) error {
+func MapToProtoMessageList[T interface{}](input interface{}, out interface{}) error {
 	if input == nil {
 		return nil
 	}
-	for _, item := range input {
+	list := input.([]interface{})
+	result := out.([]interface{})
+	for _, item := range list {
 		var m T
 		MapToProtoMessage(item, &m)
-		out = append(out)
+		result = append(result)
 	}
+	out = result
 	return nil
 }
 
