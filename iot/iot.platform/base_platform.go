@@ -159,7 +159,7 @@ func (p *basePlatform) createBatchSubDeviceReportHandler() func(client mqtt.Clie
 		go func() {
 			request := &iot.DevicesService{}
 			if err := json.Unmarshal(message.Payload(), request); err != nil {
-				log.Warningf("解析网关批量上报子设备属性失败,\r\n错误:%e\r\n报文:%s", err, message)
+				log.Warningf("解析网关批量上报子设备属性失败,\r\n错误:%s\r\n报文:%s", err.Error(), message)
 			}
 			p.batchReportHandler(*request)
 		}()
