@@ -95,8 +95,11 @@ func (c *Context) TableX(table string) *Context {
 
 func (c *Context) IsExist(table string, query interface{}, args ...interface{}) (bool, error) {
 	var count int64 = 0
-	err := GetContext().Table(table).Where(query, args...).Count(&count).Error
-	return count > 0, err
+	result := GetContext().Table(table).Where(query, args...).First(&count)
+	if result.Error == gorm.ErrRecordNotFound {
+		return false, nil
+	}
+	return result.RowsAffected > 0, result.Error
 }
 
 func (c *Context) PageListQuery(result interface{}, pagerQuery *pager.PageQuery, query IQuery) (page *pager.PageList, err error) {
