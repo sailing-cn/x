@@ -109,7 +109,7 @@ func (c *Context) PageListQuery(result interface{}, pagerQuery *pager.PageQuery,
 		page = &pager.PageList{}
 	}
 	offset := pagerQuery.PageSize * (pagerQuery.Page - 1) //mysql处理逻辑
-	total, err = c.list2(result, pagerQuery.Order, pagerQuery.PageSize, offset, query, true)
+	total, err = c.list2(result, pagerQuery.Order, int(pagerQuery.PageSize), int(offset), query, true)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (c *Context) PageList(result interface{}, pagerQuery *pager.PageQuery, quer
 	if page == nil {
 		page = &pager.PageList{}
 	}
-	total, err = c.list(result, pagerQuery.Order, pagerQuery.PageSize, pagerQuery.Page, query, true)
+	total, err = c.list(result, pagerQuery.Order, int(pagerQuery.PageSize), int(pagerQuery.Page), query, true)
 	if err != nil {
 		return nil, err
 	}
