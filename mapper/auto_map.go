@@ -12,8 +12,8 @@ func MapTo(input interface{}, out interface{}) error {
 	return err
 }
 
-// ProtoToStruct proto转结构体
-func ProtoToStruct(input interface{}, out interface{}) error {
+// MapProtoToStruct proto映射到struct
+func MapProtoToStruct(input interface{}, out interface{}) error {
 	config := &mapstructure.DecoderConfig{
 		DecodeHook: func(f, t reflect.Type, data interface{}) (interface{}, error) {
 			from := f.String()
@@ -59,7 +59,7 @@ func ProtoToStruct(input interface{}, out interface{}) error {
 	return decoder.Decode(input)
 }
 
-// MapToProtoMessage 映射到Message
+// MapToProtoMessage struct映射到proto
 func MapToProtoMessage(input interface{}, out interface{}) error {
 	config := &mapstructure.DecoderConfig{
 		DecodeHook:       protoDecoderHook,
