@@ -59,8 +59,8 @@ func MapProtoToStruct(input interface{}, out interface{}) error {
 	return decoder.Decode(input)
 }
 
-// MapToProtoMessage struct映射到proto
-func MapToProtoMessage(input interface{}, out interface{}) error {
+// MapStructToProto struct映射到proto
+func MapStructToProto(input interface{}, out interface{}) error {
 	config := &mapstructure.DecoderConfig{
 		DecodeHook:       protoDecoderHook,
 		Result:           out,
