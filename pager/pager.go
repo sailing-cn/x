@@ -13,8 +13,8 @@ type Page struct {
 }
 
 type PageQuery struct {
-	Page     int    `json:"page" form:"page"`            //页索引
-	PageSize int    `json:"page_size" form:"page_size""` //分页大小
+	Page     int32  `json:"page" form:"page"`            //页索引
+	PageSize int32  `json:"page_size" form:"page_size""` //分页大小
 	Order    string `json:"order" form:"order"`          //排序
 }
 
@@ -23,7 +23,7 @@ type PageList struct {
 	Page *Page       `json:"page"` //分页信息
 }
 
-func NewPageQuery(page int, size int, order string) *PageQuery {
+func NewPageQuery(page int32, size int32, order string) *PageQuery {
 	if size <= 0 {
 		size = 20
 	}
@@ -39,12 +39,12 @@ func NewPageQuery(page int, size int, order string) *PageQuery {
 func GetPageQuery(page *wrapperspb.Int32Value, size *wrapperspb.Int32Value) *PageQuery {
 	result := &PageQuery{}
 	if size != nil {
-		result.PageSize = int(size.GetValue())
+		result.PageSize = (size.GetValue())
 	} else {
 		result.PageSize = 20
 	}
 	if page != nil {
-		result.Page = int(page.GetValue())
+		result.Page = (page.GetValue())
 	} else {
 		result.Page = 1
 	}
