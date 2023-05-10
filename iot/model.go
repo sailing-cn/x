@@ -19,7 +19,7 @@ type Property struct {
 	Max          float32     `json:"max" mapstructure:"Max"`                    //最大值
 	MaxLength    int32       `json:"max_length" mapstructure:"MaxLength"`       //最大长度
 	Min          float32     `json:"min" mapstructure:"Min"`                    //最小长度
-	Step         int32       `json:"step" mapstructure:"Step"`                  //步长
+	Step         float32     `json:"step" mapstructure:"Step"`                  //步长
 	Unit         string      `json:"unit" mapstructure:"Unit"`                  //单位
 	Enums        []string    `json:"enums" mapstructure:"Enums"`                //枚举值
 	Description  string      `json:"description" mapstructure:"Description"`    //描述信息
@@ -48,7 +48,7 @@ type Param struct {
 	Max         float32  `json:"max"`                          //最大值
 	MaxLength   int      `json:"max_length"`                   //最大长度
 	Min         float32  `json:"min"`                          //最小长度
-	Step        int32    `json:"step"`                         //步长
+	Step        float32  `json:"step"`                         //步长
 	Enums       []string `json:"enums"`                        //枚举值
 	Unit        string   `json:"unit"`                         //单位
 	Description string   `json:"description"`                  //描述信息
