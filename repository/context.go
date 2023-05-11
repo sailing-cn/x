@@ -266,7 +266,7 @@ func (c *Context) list2(result interface{}, order string, limit, offset int, que
 	if limit > 0 {
 		db = db.Limit(limit)
 	}
-	err = db.Find(result).Error
+	err = db.Scan(result).Error
 	if err != nil {
 		log.Errorf("查询语句执行失败:%s", err.Error())
 	}
