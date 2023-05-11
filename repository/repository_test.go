@@ -25,9 +25,9 @@ func TestDm(t *testing.T) {
 //}
 
 type Client struct {
-	Id           string `json:"id,omitempty" gorm:"index:key,unique;type:varchar(255);primaryKey;"` //
-	Name         string `json:"name,omitempty" gorm:"type:varchar(255)"`                            //
-	Icon         string `json:"icon,omitempty" gorm:"type:varchar(255)"`                            //
-	Isv          string `json:"isv,omitempty" gorm:"type:varchar(255)"`                             //
-	CreationTime int64  `json:"creation_time,omitempty" gorm:"type:bigint"`                         //
+	Id           string `json:"id,omitempty" gorm:"index:key,unique;type:varchar(255);primaryKey;comment:唯一标识"` //
+	Name         string `json:"name,omitempty" gorm:"type:varchar(255)"`                                        //
+	Icon         string `json:"icon,omitempty" gorm:"type:varchar(255)"`                                        //
+	Isv          string `json:"isv,omitempty" gorm:"type:varchar(255)"`                                         //
+	CreationTime int64  `json:"creation_time,omitempty" gorm:"type:bigint"`                                     //
 }
