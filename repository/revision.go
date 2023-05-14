@@ -4,7 +4,6 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 	"sailing.cn/utils"
 )
@@ -20,12 +19,23 @@ func (r *Revision) Scan(value interface{}) error {
 	return nil
 }
 
-// Value return json value, implement driver.Valuer interface
 func (r *Revision) Value() (driver.Value, error) {
-	return []byte(uuid.NewV4().String()), nil
+	return []byte(utils.TimestampString()), nil
 }
 
 func (r *Revision) BeforeCreate(tx *gorm.DB) (err error) {
+	var _bytes = []byte(utils.TimestampString())
+	*r = _bytes
+	return nil
+}
+
+func (r *Revision) BeforeUpdate(tx *gorm.DB) (err error) {
+	var _bytes = []byte(utils.TimestampString())
+	*r = _bytes
+	return nil
+}
+
+func (r *Revision) BeforeSave(tx *gorm.DB) (err error) {
 	var _bytes = []byte(utils.TimestampString())
 	*r = _bytes
 	return nil
