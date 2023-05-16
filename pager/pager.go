@@ -5,6 +5,11 @@ import (
 	"math"
 )
 
+type BasePageQuery interface {
+	GetPageQuery() *PageQuery
+	ToPage() *PageList
+}
+
 type Page struct {
 	Total int64 `json:"total"` //总数
 	Page  int32 `json:"page"`  //页索引
