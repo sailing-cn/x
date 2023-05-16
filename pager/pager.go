@@ -36,7 +36,7 @@ func NewPageQuery(page int32, size int32, order string) *PageQuery {
 	return &PageQuery{Page: page, PageSize: size, Order: order}
 }
 
-func GetPageQuery(page *wrapperspb.Int32Value, size *wrapperspb.Int32Value) *PageQuery {
+func GetPageQuery(page *wrapperspb.Int32Value, size *wrapperspb.Int32Value, order *wrapperspb.StringValue) *PageQuery {
 	result := &PageQuery{}
 	if size != nil {
 		result.PageSize = (size.GetValue())
@@ -48,11 +48,9 @@ func GetPageQuery(page *wrapperspb.Int32Value, size *wrapperspb.Int32Value) *Pag
 	} else {
 		result.Page = 1
 	}
-	//if order != nil {
-	//	result.Order = order.Value
-	//} else {
-	//	result.Order = "creation_time"
-	//}
+	if order != nil {
+		result.Order = order.Value
+	}
 	return result
 }
 
