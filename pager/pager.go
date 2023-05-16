@@ -18,9 +18,9 @@ type Page struct {
 }
 
 type PageQuery struct {
-	Page     int32  `json:"page" form:"page"`            //页索引
-	PageSize int32  `json:"page_size" form:"page_size""` //分页大小
-	Order    string `json:"order" form:"order"`          //排序
+	Page     int32  `json:"page" form:"page"`           //页索引
+	PageSize int32  `json:"page_size" form:"page_size"` //分页大小
+	Order    string `json:"order" form:"order"`         //排序
 }
 
 type PageList struct {
