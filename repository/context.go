@@ -24,6 +24,11 @@ type IQuery interface {
 	Query() map[string]interface{}
 }
 
+type IPageQuery interface {
+	Query() map[string]interface{}
+	GetPageQuery() *pager.PageQuery
+}
+
 var (
 	_context = &Context{}
 	cnf      = &conf.Config{}
@@ -102,8 +107,8 @@ func (c *Context) IsExist(table string, query interface{}, args ...interface{}) 
 	return count > 0, result.Error
 }
 
-func (c *Context) PageListQuery(result interface{}, pagerQuery *pager.PageQuery, query IQuery) (page *pager.PageList, err error) {
-	pagerQuery.GetQuery()
+func (c *Context) PageListQuery(result interface{}, query IPageQuery) (page *pager.PageList, err error) {
+	pagerQuery := query.GetPageQuery()
 	var total int64 = 0
 	if page == nil {
 		page = &pager.PageList{}
