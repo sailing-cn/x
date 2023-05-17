@@ -63,7 +63,7 @@ func (p *PageQuery) GetQuery() {
 	}
 }
 
-func (p *PageQuery) PageQuery() *PageQuery {
+func (p *PageQuery) GetPageQuery() *PageQuery {
 	result := &PageQuery{}
 	if p.PageSize > 0 {
 		result.PageSize = p.PageSize

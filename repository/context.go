@@ -26,7 +26,7 @@ type IQuery interface {
 
 type IPageQuery interface {
 	Query() map[string]interface{}
-	PageQuery() *pager.PageQuery
+	GetPageQuery() *pager.PageQuery
 }
 
 var (
@@ -108,7 +108,7 @@ func (c *Context) IsExist(table string, query interface{}, args ...interface{}) 
 }
 
 func (c *Context) PageListQuery(result interface{}, query IPageQuery) (page *pager.PageList, err error) {
-	pagerQuery := query.PageQuery()
+	pagerQuery := query.GetPageQuery()
 	var total int64 = 0
 	if page == nil {
 		page = &pager.PageList{}

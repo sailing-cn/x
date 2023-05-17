@@ -1,18 +1,28 @@
 package repository
 
 import (
-	conf_d "sailing.cn/repository/conf.d"
+	"context"
+	"sailing.cn/pager"
 	"testing"
 )
 
 func TestDm(t *testing.T) {
-	dsn := "dm://SAILING:Sl123.com@192.168.1.65:5236?autoCommit=true"
-	InitWithCnf(&conf_d.Config{Db: &conf_d.DB{
-		Connection: dsn,
-		Type:       "dm",
-		Debug:      true,
-	}})
-	GetContext().AutoMigrate(&Client{})
+	//dsn := "dm://SAILING:Sl123.com@192.168.1.65:5236?autoCommit=true"
+	//InitWithCnf(&conf_d.Config{Db: &conf_d.DB{
+	//	Connection: dsn,
+	//	Type:       "dm",
+	//	Debug:      true,
+	//}})
+	//GetContext().AutoMigrate(&Client{})
+
+	var r interface{}
+
+	q := TestPageQuery{}
+	_, err := GetContext().Context(context.Background()).PageListQuery(&r, &q)
+	if err != nil {
+		return
+	}
+
 }
 
 //type User struct {
@@ -30,4 +40,13 @@ type Client struct {
 	Icon         string `json:"icon,omitempty" gorm:"type:varchar(255)"`                                        //
 	Isv          string `json:"isv,omitempty" gorm:"type:varchar(255)"`                                         //
 	CreationTime int64  `json:"creation_time,omitempty" gorm:"type:bigint"`                                     //
+}
+
+type TestPageQuery struct {
+	Client
+	pager.PageQuery
+}
+
+func (t *TestPageQuery) Query() map[string]interface{} {
+	return nil
 }
