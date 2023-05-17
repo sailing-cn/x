@@ -5,11 +5,6 @@ import (
 	"math"
 )
 
-type BasePageQuery interface {
-	GetPageQuery() *PageQuery
-	ToPage() *PageList
-}
-
 type Page struct {
 	Total int64 `json:"total"` //总数
 	Page  int32 `json:"page"`  //页索引
@@ -66,6 +61,24 @@ func (p *PageQuery) GetQuery() {
 	if p.Page <= 0 {
 		p.Page = 1
 	}
+}
+
+func (p *PageQuery) PageQuery() *PageQuery {
+	result := &PageQuery{}
+	if p.PageSize > 0 {
+		result.PageSize = p.PageSize
+	} else {
+		result.PageSize = 20
+	}
+	if p.Page > 0 {
+		result.Page = p.Page
+	} else {
+		result.Page = 1
+	}
+	if len(p.Order) > 0 {
+		result.Order = p.Order
+	}
+	return result
 }
 
 func (p *PageList) ToPager(source interface{}, total int64, query *PageQuery) {
