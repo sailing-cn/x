@@ -10,7 +10,6 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 	"net/http"
 	"sailing.cn/global"
-	"time"
 )
 
 type engine struct {
@@ -74,9 +73,9 @@ func (e *engine) Run() *engine {
 	}
 	addr = fmt.Sprintf("%s:%d", addr, e.cfg.Webapi.Port)
 	s := endless.NewServer(addr, e)
-	s.ReadHeaderTimeout = 20 * time.Second
-	s.WriteTimeout = 20 * time.Second
-	s.MaxHeaderBytes = 1 << 20
+	//s.ReadHeaderTimeout = 20 * time.Second
+	//s.WriteTimeout = 20 * time.Second
+	//s.MaxHeaderBytes = 1 << 20
 	log.Infof("启动 %s 服务 %s", e.cfg.Webapi.Name, addr)
 	s.ListenAndServe()
 	return e
