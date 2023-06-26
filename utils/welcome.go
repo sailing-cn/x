@@ -2,6 +2,7 @@ package utils
 
 import "fmt"
 
+// Welcome 打印欢迎信息
 func Welcome() {
 	str := `
       ___           ___                                                 ___           ___     

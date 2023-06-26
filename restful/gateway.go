@@ -9,11 +9,13 @@ import (
 	"sailing.cn/v2/conf"
 )
 
+// Engine 网关引擎
 type Engine struct {
 	*gin.Engine
 	cfg *conf.WebapiConfig
 }
 
+// Option 网关配置项
 type Option func(e *Engine) error
 
 var instance = &Engine{}
@@ -33,6 +35,7 @@ func NewGinDefault(cfg *conf.WebapiConfig, opts ...Option) *Engine {
 	return instance
 }
 
+// WithCors 跨域配置
 func WithCors() Option {
 	return func(e *Engine) error {
 		e.Use(func(c *gin.Context) {
@@ -51,6 +54,7 @@ func WithCors() Option {
 	}
 }
 
+// Run 运行网关引擎
 func (e *Engine) Run() {
 	addr := e.cfg.Webapi.Addr
 	if len(addr) == 0 {

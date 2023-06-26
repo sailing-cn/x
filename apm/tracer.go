@@ -15,6 +15,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// Config 链路追踪配置
 type Config struct {
 	Service  string `json:"service" yaml:"service"`   //服务名称
 	Version  string `json:"version" yaml:"version"`   //服务版本
@@ -22,6 +23,7 @@ type Config struct {
 	Host     string `json:"host" yaml:"host"`         //存储地址
 }
 
+// NewConfig 创建一个链路追踪配置--默认路径 ./conf.d/conf.yml
 func NewConfig(paths ...string) *Config {
 	viper.AddConfigPath("./conf.d")
 	viper.SetConfigName("conf")
@@ -38,11 +40,13 @@ func NewConfig(paths ...string) *Config {
 	return conf
 }
 
+// NewTracer 创建一个链路追踪器
 func NewTracer(cfg *Config) func(ctx context.Context) error {
 	provider := getTracerProvider(cfg)
 	return provider.Shutdown
 }
 
+// NewGrpcTraceOptions 配置GRPC Server的链路追踪拦截器
 func NewGrpcTraceOptions() []grpc.ServerOption {
 	var options = []grpc.ServerOption{
 		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
@@ -51,6 +55,9 @@ func NewGrpcTraceOptions() []grpc.ServerOption {
 	return options
 }
 
+// getTracerProvider 链路追踪得provider
+//
+// 暂时只支持zipkin和jaeger
 func getTracerProvider(cfg *Config) *sdk.TracerProvider {
 	var exporter sdk.SpanExporter
 	var err error

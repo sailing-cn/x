@@ -5,30 +5,33 @@ import (
 	"github.com/spf13/viper"
 )
 
+// GrpcConfig GRPC服务配置
 type GrpcConfig struct {
 	Grpc struct {
-		Name    string `json:"name"`
-		Addr    string `json:"addr"`
-		Port    int    `json:"port"`
-		Version string `json:"version"`
-		MaxSend int    `json:"max_send" yaml:"max_send"`
-		MaxRecv int    `json:"max_recv" yaml:"max_recv"`
-	} `json:"grpc"`
-	Services map[string]string `json:"services"`
+		Name    string `json:"name"`                     //服务名称
+		Addr    string `json:"addr"`                     //监听地址
+		Port    int    `json:"port"`                     //监听端口
+		Version string `json:"version"`                  //版本
+		MaxSend int    `json:"max_send" yaml:"max_send"` //最大发送字节
+		MaxRecv int    `json:"max_recv" yaml:"max_recv"` //最大接收字节
+	} `json:"grpc"` //grpc 配置项
+	Services map[string]string `json:"services"` //依赖服务配置项
 }
 
+// WebapiConfig WEBAPI配置
 type WebapiConfig struct {
 	Webapi struct {
-		Name    string `json:"name"`
-		Addr    string `json:"addr"`
-		Port    int    `json:"port"`
-		Version string `json:"version"`
-		Prefix  string `json:"prefix"`
-		Mode    string `json:"mode"`
-	} `json:"webapi"`
-	Services map[string]string `json:"services"`
+		Name    string `json:"name"`    //网关名称
+		Addr    string `json:"addr"`    //监听地址
+		Port    int    `json:"port"`    //监听端口
+		Version string `json:"version"` //版本
+		Prefix  string `json:"prefix"`  //路由前缀
+		Mode    string `json:"mode"`    //模式 dev:开发模式
+	} `json:"webapi"` //api配置项
+	Services map[string]string `json:"services"` //依赖服务配置项
 }
 
+// NewWebapiConfig 创建一个WEBAPI配置,从配置文件读取,默认路径 ./conf.d/conf.yml
 func NewWebapiConfig(paths ...string) *WebapiConfig {
 	if len(paths) == 0 {
 		viper.AddConfigPath("./conf.d/")
@@ -56,6 +59,7 @@ func NewWebapiConfig(paths ...string) *WebapiConfig {
 	return cfg
 }
 
+// NewGrpcConfig 创建一个GRPC服务配置,从配置文件读取,默认路径 ./conf.d/conf.yml
 func NewGrpcConfig(paths ...string) *GrpcConfig {
 	if len(paths) == 0 {
 		viper.AddConfigPath("./conf.d/")

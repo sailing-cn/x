@@ -1,4 +1,4 @@
-module sailing.cn/v2
+module github.com/sailing-cn/x/v2
 
 go 1.20
 

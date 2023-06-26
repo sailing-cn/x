@@ -10,11 +10,11 @@ import (
 var (
 	ctx    context.Context
 	cancel context.CancelFunc
-	//socket      conf.WebsocketConfig
-	//traceConfig *apm.Config
 )
 
-func NewServeCmd(listener GrpcListener) *cobra.Command {
+// NewServeCmd 创建服务命令
+// listener: 服务监听器
+func NewServeCmd(listener ServerListener) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "serve",
 		Short: "启用 http/2 grpc server",
@@ -23,7 +23,6 @@ func NewServeCmd(listener GrpcListener) *cobra.Command {
 			apmConf := apm.NewConfig()
 			provider := apm.NewTracer(apmConf)
 			defer provider(ctx)
-			//repository.Init()
 			utils.Welcome()
 			if listener != nil {
 				listener.Listen()
@@ -35,10 +34,7 @@ func NewServeCmd(listener GrpcListener) *cobra.Command {
 	return cmd
 }
 
-func GrpcServe() {
-
-}
-
-type GrpcListener interface {
+// ServerListener 服务监听器接口
+type ServerListener interface {
 	Listen()
 }
