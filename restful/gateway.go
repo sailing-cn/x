@@ -5,6 +5,8 @@ import (
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 	"sailing.cn/v2/conf"
 )
@@ -33,6 +35,20 @@ func NewGinDefault(cfg *conf.WebapiConfig, opts ...Option) *Engine {
 		}
 	}
 	return instance
+}
+
+// Router 注册路由
+func (e *Engine) Router(handler func(g *gin.RouterGroup)) *Engine {
+	var group *gin.RouterGroup
+	group = e.Group(e.cfg.Webapi.Prefix)
+	handler(group)
+	return e
+}
+
+// Swagger 注入swagger路由
+func (e *Engine) Swagger(path string) *Engine {
+	e.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	return e
 }
 
 // WithCors 跨域配置
