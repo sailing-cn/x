@@ -1,5 +1,7 @@
 package pager
 
+import "math"
+
 // Page 分页
 type Page struct {
 	Total int64 `json:"total"` //总数
@@ -19,4 +21,24 @@ type PageQuery struct {
 type PageResult struct {
 	Data interface{} `json:"data"` //数据列表
 	Page *Page       `json:"page"` //分页信息
+}
+
+func (p *PageResult) Build(source interface{}, total int64, query *PageQuery) {
+	page := &Page{
+		Total: total,
+		Page:  int32(query.Page),
+		Count: 0,
+		Size:  int32(query.PageSize),
+	}
+	p.Data = source
+	p.Page = page
+	if page.Total == 0 || page.Size == 0 {
+		page.Count = 0
+	} else {
+		if float64(page.Total)/float64(page.Size) == 0 {
+			page.Count = int32(math.Ceil(float64(page.Total) / float64(page.Size)))
+		} else {
+			page.Count = int32(math.Ceil(float64(page.Total)/float64(page.Size))) + 1
+		}
+	}
 }

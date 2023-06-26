@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdk "go.opentelemetry.io/otel/sdk/trace"
-	"go.opentelemetry.io/otel/semconv/v1.9.0"
+	"go.opentelemetry.io/otel/semconv/v1.16.0"
 	"google.golang.org/grpc"
 )
 
@@ -46,11 +46,20 @@ func NewTracer(cfg *Config) func(ctx context.Context) error {
 	return provider.Shutdown
 }
 
-// NewGrpcTraceOptions 配置GRPC Server的链路追踪拦截器
-func NewGrpcTraceOptions() []grpc.ServerOption {
+// NewGrpcServerTraceOptions 配置GRPC Server的链路追踪拦截器
+func NewGrpcServerTraceOptions() []grpc.ServerOption {
 	var options = []grpc.ServerOption{
 		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
 		grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()),
+	}
+	return options
+}
+
+// GetGrpcClientTraceOption 配置GRPC Client的链路追踪拦截器
+func GetGrpcClientTraceOption() []grpc.DialOption {
+	var options = []grpc.DialOption{
+		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()),
+		grpc.WithStreamInterceptor(otelgrpc.StreamClientInterceptor()),
 	}
 	return options
 }
