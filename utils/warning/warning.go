@@ -16,7 +16,7 @@ func (w Warning) Error() string {
 func (w Warning) Message() string {
 	return w.Detail
 }
-func New(text string) error {
+func New(text string) *Warning {
 	return &Warning{Detail: text, Code: 600}
 }
 
@@ -32,4 +32,16 @@ func MustOk(err error) (error, bool) {
 		return err, false
 	}
 	return err, false
+}
+
+func FromError(err error) (s *Warning, ok bool) {
+	if err == nil {
+		return nil, true
+	}
+	if se, ok := err.(interface {
+		GRPCStatus() *Warning
+	}); ok {
+		return se.GRPCStatus(), true
+	}
+	return New(err.Error()), false
 }

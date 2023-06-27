@@ -5,6 +5,11 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	WebapiConf = &WebapiConfig{}
+	GrpcConf   = &GrpcConfig{}
+)
+
 // GrpcConfig GRPC服务配置
 type GrpcConfig struct {
 	Grpc struct {
@@ -56,6 +61,7 @@ func NewWebapiConfig(paths ...string) *WebapiConfig {
 		log.Panicf("解析配置文件错误:%s", err.Error())
 		panic(1)
 	}
+	WebapiConf = cfg
 	return cfg
 }
 
@@ -84,5 +90,6 @@ func NewGrpcConfig(paths ...string) *GrpcConfig {
 		log.Panicf("解析配置文件错误:%s", err.Error())
 		panic(1)
 	}
+	GrpcConf = cfg
 	return cfg
 }
