@@ -60,6 +60,7 @@ func Init() {
 // Get 获取数据库连接实例
 func Get() *DbContext {
 	if instance == nil || instance.DB == nil {
+		instance = &DbContext{}
 		newDb()
 	}
 	return instance
