@@ -18,12 +18,12 @@ type PageQuery struct {
 }
 
 // PageResult 分页结果
-type PageResult struct {
-	Data interface{} `json:"data"` //数据列表
-	Page *Page       `json:"page"` //分页信息
+type PageResult[T interface{}] struct {
+	Data []*T  `json:"data"` //数据列表
+	Page *Page `json:"page"` //分页信息
 }
 
-func (p *PageResult) Build(source interface{}, total int64, query *PageQuery) {
+func (p *PageResult[T]) Build(source []*T, total int64, query *PageQuery) {
 	page := &Page{
 		Total: total,
 		Page:  int32(query.Page),

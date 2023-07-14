@@ -51,6 +51,14 @@ func (e *Engine) Swagger(path string) *Engine {
 	return e
 }
 
+// WithSwagger swagger配置
+func WithSwagger() Option {
+	return func(e *Engine) error {
+		e.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		return nil
+	}
+}
+
 // WithCors 跨域配置
 func WithCors() Option {
 	return func(e *Engine) error {
