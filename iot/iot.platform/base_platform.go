@@ -45,6 +45,7 @@ type basePlatform struct {
 	deviceOfflineHandler        DeviceOfflineHandler
 	versionReportHandler        VersionReportHandler
 	upgradeProcessReportHandler UpgradeProcessReportHandler
+	connectLostHandler          ConnectLostHandler
 }
 
 func (p *basePlatform) Init() bool {
@@ -57,6 +58,11 @@ func (p *basePlatform) Init() bool {
 	options.SetAutoReconnect(true)
 	options.SetConnectRetry(true)
 	options.SetConnectTimeout(2 * time.Second)
+	if p.connectLostHandler != nil {
+		options.OnConnectionLost = func(client mqtt.Client, err error) {
+			p.connectLostHandler(client, err)
+		}
+	}
 	if strings.Contains(p.Servers, "tls") || strings.Contains(p.Servers, "ssl") {
 		log.Infof("server support tls connection")
 		if p.ServerCert != nil {

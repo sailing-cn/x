@@ -1,6 +1,9 @@
 package iot_platform
 
-import "sailing.cn/iot"
+import (
+	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"sailing.cn/iot"
+)
 
 type PropertiesReportHandler func(request iot.DeviceService)
 type GatewayBatchReportSubDeviceHandler func(request iot.DevicesService)
@@ -19,3 +22,5 @@ type UpgradeProcessReportHandler func(deviceId string, result iot.UpgradeProgres
 type DeviceOnlineHandler func(info *iot.DeviceOnlineInfo)
 
 type DeviceOfflineHandler func(info *iot.DeviceOfflineInfo)
+
+type ConnectLostHandler func(client mqtt.Client, err error)

@@ -86,6 +86,10 @@ type Platform interface {
 	SetUpgradeProcessReportHandler(handler UpgradeProcessReportHandler)
 }
 
+func (platform *iotPlatform) SetConnectLostHandler(handler ConnectLostHandler) {
+	platform.base.connectLostHandler = handler
+}
+
 func (platform *iotPlatform) AddMessageHandler(handler MessageHandler) {
 	platform.base.addMessageHandler(handler)
 }
