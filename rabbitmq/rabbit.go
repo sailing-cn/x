@@ -3,10 +3,7 @@ package rabbitmq
 import (
 	amqp "github.com/rabbitmq/amqp091-go"
 	log "github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v3"
-	"os"
-	"path/filepath"
-	"sailing.cn/utils"
+	"github.com/spf13/viper"
 	"sync"
 )
 
@@ -32,14 +29,33 @@ func NewRabbitMQ() RabbitMQ {
 	}
 }
 
+func NewConfig(paths ...string) *ConnConfig {
+	if len(paths) == 0 {
+		viper.AddConfigPath("./conf.d/")
+		viper.SetConfigName("conf")
+		viper.SetConfigType("yaml")
+	} else {
+		for _, s := range paths {
+			viper.AddConfigPath(s)
+		}
+	}
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Panicf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml")
+			panic(1)
+		} else {
+			log.Panicf("读取配置文件错误:%s", err.Error())
+		}
+	}
+	cfg := &ConnConfig{}
+	err := viper.Unmarshal(cfg)
+	if err != nil {
+		log.Panicf("解析配置文件错误:%s", err.Error())
+		panic(1)
+	}
+	return cfg
+}
+
 func Init() {
-	path := filepath.Join(utils.GetExecPath(), "conf.d", "conf.yml")
-	file, err := os.ReadFile(path)
-	if err != nil {
-		log.Errorf("读取配置文件出错:%s", err)
-	}
-	err = yaml.Unmarshal(file, &conf)
-	if err != nil {
-		log.Errorf("解析配置文件出错:%s", err)
-	}
+	conf.Conf = NewConfig()
 }
