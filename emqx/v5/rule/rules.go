@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	sdk "sailing.cn/emqx/v5/http"
-	"sailing.cn/utils"
+	"sailing.cn/v2/convert"
+	sdk "sailing.cn/v2/emqx/v5/http"
 )
 
 const (
@@ -67,7 +67,7 @@ type RuleQuery struct {
 func (c *RuleService) GetRule(ruleId string) (rule *EMQXRule, err error) {
 	result := &EMQXRule{}
 	r := c.Client.R().
-		SetResult(result)
+		SetSuccessResult(result)
 	resp, err := r.Get(c.Client.RequestURL(rulesURL + "/" + ruleId))
 	if err != nil {
 		return
@@ -82,10 +82,10 @@ func (c *RuleService) GetRule(ruleId string) (rule *EMQXRule, err error) {
 // ListRule 规则列表
 func (c *RuleService) ListRule(query *RuleQuery) (*sdk.PageResponse[EMQXRule], error) {
 	result := new(sdk.PageResponse[EMQXRule])
-	_query := utils.ToMapStr(*query)
+	_query := convert.ToMapString(*query)
 	resp, err := c.Client.R().
 		SetQueryParams(_query).
-		SetResult(&result).Get(c.Client.RequestURL(rulesURL))
+		SetSuccessResult(&result).Get(c.Client.RequestURL(rulesURL))
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (c *RuleService) ListRule(query *RuleQuery) (*sdk.PageResponse[EMQXRule], e
 // CreateRule 创建规则
 func (c *RuleService) CreateRule(rule *EMQXRuleCreateRequest) (interface{}, error) {
 	var result interface{}
-	resp, err := c.Client.R().SetBody(rule).SetResult(&result).Post(c.Client.RequestURL(rulesURL))
+	resp, err := c.Client.R().SetBody(rule).SetSuccessResult(&result).Post(c.Client.RequestURL(rulesURL))
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (c *RuleService) UpdateEnable(ruleId string, enable bool) (interface{}, err
 	url := c.Client.RequestURL(rulesURL + "/" + ruleId)
 	resp, err := c.Client.R().SetBody(struct {
 		Enable bool `json:"enable"`
-	}{enable}).SetResult(&result).Put(url)
+	}{enable}).SetSuccessResult(&result).Put(url)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +151,7 @@ func (c *RuleService) Update(ruleId string, rule *EMQXRuleUpdateRequest) (interf
 	//xxx, err := json.Marshal(rule)
 	//log.Error(string(xxx))
 	var result interface{}
-	resp, err := c.Client.R().SetBody(rule).SetResult(&result).Put(c.Client.RequestURL(rulesURL + "/" + ruleId))
+	resp, err := c.Client.R().SetBody(rule).SetSuccessResult(&result).Put(c.Client.RequestURL(rulesURL + "/" + ruleId))
 	if err != nil {
 		return nil, err
 	}

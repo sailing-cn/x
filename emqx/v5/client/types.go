@@ -1,7 +1,7 @@
 package client
 
 import (
-	"sailing.cn/emqx"
+	"sailing.cn/v2/emqx"
 	"time"
 )
 

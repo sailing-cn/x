@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	sdk "sailing.cn/emqx/v5/http"
-	"sailing.cn/utils"
+	"sailing.cn/v2/convert"
+	sdk "sailing.cn/v2/emqx/v5/http"
 )
 
 const (
@@ -16,10 +16,10 @@ type ClientService sdk.Service
 
 func (c *ClientService) ListClient(query *ClientPageQuery) (*sdk.PageResponse[ClientResponse], error) {
 	result := new(sdk.PageResponse[ClientResponse])
-	_query := utils.ToMapStr(*query)
+	_query := convert.ToMapString(*query)
 	resp, err := c.Client.R().
 		SetQueryParams(_query).
-		SetResult(&result).Get(c.Client.RequestURL(CLIENT_URL))
+		SetSuccessResult(&result).Get(c.Client.RequestURL(CLIENT_URL))
 	if err != nil {
 		return nil, err
 	}

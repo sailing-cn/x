@@ -1,8 +1,8 @@
 package v5
 
 import (
-	"sailing.cn/emqx/v5/client"
-	"sailing.cn/emqx/v5/config"
+	"sailing.cn/v2/emqx/v5/client"
+	"sailing.cn/v2/emqx/v5/config"
 	"testing"
 	"time"
 )

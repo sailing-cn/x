@@ -3,7 +3,7 @@ package http
 import (
 	"github.com/imroc/req/v3"
 	"net/url"
-	"sailing.cn/emqx/v5/config"
+	"sailing.cn/v2/emqx/v5/config"
 )
 
 type APIClient struct {

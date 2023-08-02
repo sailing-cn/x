@@ -6,8 +6,8 @@ import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"net/http"
-	sdk "sailing.cn/emqx/v5/http"
-	"sailing.cn/wrong"
+	sdk "sailing.cn/v2/emqx/v5/http"
+	"sailing.cn/v2/utils/warning"
 	"strings"
 )
 
@@ -91,7 +91,7 @@ func (s *BridgeService) CreateBridge(model *HttpBridge) (interface{}, error) {
 	result := new(HttpBridge)
 	resp, err := s.Client.R().
 		SetBody(*model).
-		SetResult(result).
+		SetSuccessResult(result).
 		Post(s.Client.RequestURL(bridgeURL))
 	if err != nil {
 		return nil, err
@@ -108,7 +108,7 @@ func (s *BridgeService) CreateBridge(model *HttpBridge) (interface{}, error) {
 }
 
 func (s *BridgeService) ListBridge() (list []Bridge, err error) {
-	resp, err := s.Client.R().SetResult(&list).Get(s.Client.RequestURL(bridgeURL))
+	resp, err := s.Client.R().SetSuccessResult(&list).Get(s.Client.RequestURL(bridgeURL))
 	if resp.StatusCode != http.StatusOK {
 		return nil, errors.New(resp.String())
 	}
@@ -118,7 +118,7 @@ func (s *BridgeService) ListBridge() (list []Bridge, err error) {
 // GetBridge bridgeId 示例  type : id  == mqtt:mqtt_example || webhook :123456
 func (s *BridgeService) GetBridge(bridgeId string) (bridge *Bridge, err error) {
 	result := &Bridge{}
-	r := s.Client.R().SetResult(result)
+	r := s.Client.R().SetSuccessResult(result)
 	resp, err := r.Get(s.Client.RequestURL(bridgeURL + "/" + bridgeId))
 	if err != nil {
 		return
@@ -134,7 +134,7 @@ func (s *BridgeService) GetBridge(bridgeId string) (bridge *Bridge, err error) {
 func (s *BridgeService) Update(bridgeId string, bridge *UpdateHttpBridge) (interface{}, error) {
 	model, err := s.GetBridge(bridgeId)
 	if err != nil {
-		return nil, wrong.New("当前动作未找到，请重试")
+		return nil, warning.New("当前动作未找到，请重试")
 	}
 	bridge.Body = model.Body
 	bridge.ConnectTimeout = model.ConnectTimeout
@@ -149,7 +149,7 @@ func (s *BridgeService) Update(bridgeId string, bridge *UpdateHttpBridge) (inter
 	xxx, err := json.Marshal(bridge)
 	log.Print(xxx)
 	var result interface{}
-	resp, err := s.Client.R().SetBody(bridge).SetResult(&result).Put(s.Client.RequestURL(bridgeURL + "/" + bridgeId))
+	resp, err := s.Client.R().SetBody(bridge).SetSuccessResult(&result).Put(s.Client.RequestURL(bridgeURL + "/" + bridgeId))
 	if err != nil {
 		return nil, err
 	}

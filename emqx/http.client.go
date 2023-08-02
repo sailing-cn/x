@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
-	"sailing.cn/utils"
-	"sailing.cn/wrong"
+	path2 "sailing.cn/v2/path"
+	"sailing.cn/v2/utils/warning"
 	"strings"
 )
 
@@ -24,7 +24,7 @@ var cnf = &Config{}
 
 func (c *Config) Init(path string) {
 	if len(path) == 0 {
-		path = filepath.Join(utils.GetExecPath(), "conf.d", "conf.yml")
+		path = filepath.Join(path2.GetExecPath(), "conf.d", "conf.yml")
 	}
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -72,7 +72,7 @@ func (r *Resource) Get() (*Resource, error) {
 		return nil, err
 	}
 	if response.StatusCode != http.StatusOK {
-		return nil, wrong.New("获取资源实例失败")
+		return nil, warning.New("获取资源实例失败")
 	}
 	buf, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()
@@ -131,7 +131,7 @@ func (r *Resource) Delete() error {
 		return err
 	}
 	if response.StatusCode != http.StatusOK {
-		return wrong.New("删除资源失败")
+		return warning.New("删除资源失败")
 	}
 	buf, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()
@@ -159,7 +159,7 @@ func (r *Rule) Create() error {
 	}
 	if response.StatusCode != http.StatusOK {
 		log.Errorf("创建规则失败")
-		return wrong.New(response.Status)
+		return warning.New(response.Status)
 	}
 	buf, err = ioutil.ReadAll(response.Body)
 	//这里需要关闭
@@ -179,16 +179,16 @@ func (r *Rule) Update() error {
 	response, err := c.Do(c.Request)
 	if err != nil {
 		log.Errorf("修改规则失败")
-		return wrong.New("修改规则失败")
+		return warning.New("修改规则失败")
 	}
 	if response.StatusCode != http.StatusOK {
 		log.Errorf("修改规则失败")
-		return wrong.Warn("修改规则失败")
+		return warning.New("修改规则失败")
 	}
 	buf, err = ioutil.ReadAll(response.Body)
 	response.Body.Close()
 	if err != nil {
-		return wrong.Warn("修改规则失败")
+		return warning.New("修改规则失败")
 	}
 	err = json.Unmarshal(buf, r)
 	return err
@@ -206,7 +206,7 @@ func (r *Rule) UpdateActions() error {
 		return err
 	}
 	if response.StatusCode != http.StatusOK {
-		return wrong.New("修改规则动作失败")
+		return warning.New("修改规则动作失败")
 	}
 	buf, err = ioutil.ReadAll(response.Body)
 	response.Body.Close()
@@ -229,7 +229,7 @@ func (r *Rule) UpdateStatus() error {
 		return err
 	}
 	if response.StatusCode != http.StatusOK {
-		return wrong.New("更新规则状态失败")
+		return warning.New("更新规则状态失败")
 	}
 	buf, err = ioutil.ReadAll(response.Body)
 	response.Body.Close()
@@ -248,7 +248,7 @@ func (r *Rule) Delete() error {
 		return err
 	}
 	if response.StatusCode != http.StatusOK {
-		return wrong.New("删除规则失败")
+		return warning.New("删除规则失败")
 	}
 	buf, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()
@@ -276,7 +276,7 @@ func (r *Rule) Get() (*Rule, error) {
 		return nil, err
 	}
 	if response.StatusCode != http.StatusOK {
-		return nil, wrong.New("获取规则实例失败")
+		return nil, warning.New("获取规则实例失败")
 	}
 	buf, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()

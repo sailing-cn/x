@@ -1,7 +1,7 @@
 package v5
 
 import (
-	"sailing.cn/emqx/v5/rule"
+	"sailing.cn/v2/emqx/v5/rule"
 	"testing"
 )
 

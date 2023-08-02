@@ -18,6 +18,11 @@ type IPageQuery interface {
 	GetPageQuery() *pager.PageQuery
 }
 
+// Preload 预加载
+func (c *DbContext) Preload(query string, args ...interface{}) *DbContext {
+	return &DbContext{c.DB.Preload(query, args)}
+}
+
 // Query 查询
 func (c *DbContext) Query(result interface{}, order string, query IQuery) error {
 	_, err := c.query(result, order, 0, 0, query, false)

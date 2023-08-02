@@ -2,11 +2,11 @@ package v5
 
 import (
 	log "github.com/sirupsen/logrus"
-	"sailing.cn/emqx/v5/bridge"
-	"sailing.cn/emqx/v5/client"
-	"sailing.cn/emqx/v5/config"
-	"sailing.cn/emqx/v5/http"
-	"sailing.cn/emqx/v5/rule"
+	"sailing.cn/v2/emqx/v5/bridge"
+	"sailing.cn/v2/emqx/v5/client"
+	"sailing.cn/v2/emqx/v5/config"
+	"sailing.cn/v2/emqx/v5/http"
+	"sailing.cn/v2/emqx/v5/rule"
 )
 
 type EmqxClient struct {

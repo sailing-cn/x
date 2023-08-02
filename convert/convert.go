@@ -12,3 +12,10 @@ func ToString(source interface{}) string {
 	}
 	return string(byteData)
 }
+
+func ToMapString(source interface{}) map[string]string {
+	var data = make(map[string]string)
+	buf, _ := json.Marshal(source)
+	_ = json.Unmarshal(buf, &data)
+	return data
+}
