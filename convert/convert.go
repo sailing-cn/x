@@ -19,3 +19,11 @@ func ToMapString(source interface{}) map[string]string {
 	_ = json.Unmarshal(buf, &data)
 	return data
 }
+
+func ToBytes(in interface{}) (buf []byte) {
+	buf, err := json.Marshal(in)
+	if err != nil {
+		return []byte{}
+	}
+	return buf
+}

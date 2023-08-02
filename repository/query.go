@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"errors"
 	log "github.com/sirupsen/logrus"
 	"reflect"
@@ -30,12 +31,13 @@ func (c *DbContext) Query(result interface{}, order string, query IQuery) error 
 }
 
 // PageQuery 分页查询
-func (c *DbContext) PageQuery(query IPageQuery) (result *pager.PageResult, err error) {
+func PageQuery[T interface{}](ctx context.Context, query IPageQuery) (result *pager.PageResult[T], err error) {
+	c := GetContext(ctx)
 	pagerQuery := query.GetPageQuery()
 	var total int64 = 0
-	list := make([]interface{}, 0)
+	list := make([]*T, 0)
 	if result == nil {
-		result = &pager.PageResult{}
+		result = &pager.PageResult[T]{}
 	}
 	offset := pagerQuery.PageSize * (pagerQuery.Page - 1) //mysql处理逻辑
 	total, err = c.query(&list, pagerQuery.Order, int(pagerQuery.PageSize), int(offset), query, true)
