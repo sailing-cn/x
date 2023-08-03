@@ -177,3 +177,8 @@ func (platform *platform) SendCommand(command iot.Command) bool {
 	}
 	return true
 }
+
+// SetConnectLostHandler 设置断开连接处理器
+func (platform *platform) SetConnectLostHandler(handler ConnectLostHandler) {
+	platform.base.connectLostHandler = handler
+}

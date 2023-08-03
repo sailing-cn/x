@@ -27,19 +27,27 @@ type Client interface {
 	Subscribe(topic string, handler func(msg Message))
 	Subscribe2(topic string, handler func(c mqtt.Client, msg mqtt.Message)) error
 	Publish(topic string, body interface{}) error
+	SetConnectionLostHandler(handler ConnectionLostHandler)
 }
 
 var (
 	instance Client
 )
 
+type ConnectionLostHandler func(client mqtt.Client, err error)
+
 type client struct {
-	Id         string
-	Password   string
-	Server     string
-	ServerCert []byte
-	Client     mqtt.Client
-	qos        byte
+	Id                    string
+	Password              string
+	Server                string
+	ServerCert            []byte
+	Client                mqtt.Client
+	qos                   byte
+	connectionLostHandler ConnectionLostHandler
+}
+
+func (c *client) SetConnectionLostHandler(handler ConnectionLostHandler) {
+	c.connectionLostHandler = handler
 }
 
 func (c *client) DisConnect() {
@@ -91,11 +99,11 @@ func (c *client) Publish(topic string, body interface{}) error {
 	return nil
 }
 
-func Get(cnf *Config) Client {
+func Get(cnf *Config) *Client {
 	if instance == nil || instance.IsConnected() == false {
 		instance = create(cnf.ClientId, cnf.Password, cnf.Server)
 	}
-	return instance
+	return &instance
 }
 
 func (c *client) Init() bool {
@@ -110,8 +118,13 @@ func (c *client) Init() bool {
 	options.SetConnectTimeout(2 * time.Second)
 	//options.SetCleanSession(false)
 	options.SetCleanSession(true)
-	options.OnConnectionLost = func(c mqtt.Client, err error) {
+	options.OnConnectionLost = func(cl mqtt.Client, err error) {
 		log.Errorf("与服务器断开连接")
+		if c.connectionLostHandler != nil {
+			cl.Disconnect(0)
+			createClient(c, options)
+			c.connectionLostHandler(cl, err)
+		}
 	}
 	options.OnReconnecting = func(c mqtt.Client, options *mqtt.ClientOptions) {
 		log.Errorf("正在重新连接")
@@ -136,6 +149,10 @@ func (c *client) Init() bool {
 		})
 	}
 
+	return createClient(c, options)
+}
+
+func createClient(c *client, options *mqtt.ClientOptions) bool {
 	c.Client = mqtt.NewClient(options)
 	if token := c.Client.Connect(); token.Wait() && token.Error() != nil {
 		log.Warningf("mqtt client %s init failed,error = %v", c.Id, token.Error())

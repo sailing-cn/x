@@ -1,6 +1,9 @@
 package platform
 
-import "sailing.cn/v2/iot"
+import (
+	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"sailing.cn/v2/iot"
+)
 
 // PropertiesReportHandler 属性上报处理器
 type PropertiesReportHandler func(request iot.DeviceService)
@@ -28,3 +31,6 @@ type DeviceOnlineHandler func(info *iot.DeviceOnlineInfo)
 
 // DeviceOfflineHandler 设备离线处理器
 type DeviceOfflineHandler func(info *iot.DeviceOfflineInfo)
+
+// ConnectLostHandler 断开连接处理器
+type ConnectLostHandler func(client mqtt.Client, err error)

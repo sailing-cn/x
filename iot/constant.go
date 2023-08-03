@@ -123,3 +123,18 @@ const (
 	UPGRADE_PROGRESS_REPORT EventType = "upgrade_progress_report" //设备升级状态上报
 	MESSAGE_RECEUVED        EventType = "message_received"        //消息状态变更
 )
+
+const (
+	UPGRADE_SUCCESS     UpgradeResult = 0   //处理成功
+	BUSY                UpgradeResult = 1   //设备使用中
+	SIGNAL_QUALITY_BAD  UpgradeResult = 2   //信号质量差
+	LATEST              UpgradeResult = 3   //已经是最新版本
+	LOW_BATTERY         UpgradeResult = 4   //电量不足
+	NO_SPACE            UpgradeResult = 5   //剩余空间不足
+	DOWNLOAD_TIMEOUT    UpgradeResult = 6   //下载超时
+	VERIFICATION_FAIL   UpgradeResult = 7   //升级包校验失败
+	NOT_SUPPORT_PACKAGE UpgradeResult = 8   //升级包类型不支持
+	OUT_OF_MEMORY       UpgradeResult = 9   //内存不足
+	INSTALL_FAIL        UpgradeResult = 10  //安装升级包失败
+	INTERNAL_ERROR      UpgradeResult = 255 //内部异常
+)

@@ -47,6 +47,16 @@ type base struct {
 	deviceOfflineHandler        DeviceOfflineHandler
 	versionReportHandler        VersionReportHandler
 	upgradeProcessReportHandler UpgradeProcessReportHandler
+	connectLostHandler          ConnectLostHandler
+}
+
+func create(p *base, options *mqtt.ClientOptions) bool {
+	p.Client = mqtt.NewClient(options)
+	if token := p.Client.Connect(); token.Wait() && token.Error() != nil {
+		log.Warningf("device %s init failed,error = %v", p.Id, token.Error())
+		return false
+	}
+	return true
 }
 
 func (p *base) Init() bool {
@@ -78,13 +88,16 @@ func (p *base) Init() bool {
 			InsecureSkipVerify: true,
 		})
 	}
-
-	p.Client = mqtt.NewClient(options)
-	if token := p.Client.Connect(); token.Wait() && token.Error() != nil {
-		log.Warningf("device %s init failed,error = %v", p.Id, token.Error())
-		return false
+	if p.connectLostHandler != nil {
+		options.OnConnectionLost = func(client mqtt.Client, err error) {
+			client.Disconnect(0)
+			if create(p, options) {
+				p.subscribeDefaultTopics()
+			}
+			p.connectLostHandler(client, err)
+		}
 	}
-	return true
+	return create(p, options)
 }
 func (p *base) DisConnect() {
 	if p.Client != nil {
