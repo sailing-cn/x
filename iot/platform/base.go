@@ -88,12 +88,13 @@ func (p *base) Init() bool {
 			InsecureSkipVerify: true,
 		})
 	}
-	if p.connectLostHandler != nil {
-		options.OnConnectionLost = func(client mqtt.Client, err error) {
-			client.Disconnect(0)
-			if create(p, options) {
-				p.subscribeDefaultTopics()
-			}
+
+	options.OnConnectionLost = func(client mqtt.Client, err error) {
+		client.Disconnect(0)
+		if create(p, options) {
+			p.subscribeDefaultTopics()
+		}
+		if p.connectLostHandler != nil {
 			p.connectLostHandler(client, err)
 		}
 	}
