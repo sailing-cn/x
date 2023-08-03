@@ -2,6 +2,7 @@ package warning
 
 import (
 	"errors"
+	"google.golang.org/grpc/status"
 )
 
 type Warning struct {
@@ -18,6 +19,11 @@ func (w Warning) Message() string {
 }
 func New(text string) *Warning {
 	return &Warning{Detail: text, Code: 600}
+}
+
+// GRPCError GRPC错误
+func GRPCError(text string) error {
+	return status.Error(600, text)
 }
 
 //func GrpcWarning(msg string) error {
