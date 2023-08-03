@@ -34,7 +34,7 @@ var (
 	instance Client
 )
 
-type ConnectionLostHandler func(client mqtt.Client, err error)
+type ConnectionLostHandler func(client Client, err error)
 
 type client struct {
 	Id                    string
@@ -99,11 +99,11 @@ func (c *client) Publish(topic string, body interface{}) error {
 	return nil
 }
 
-func Get(cnf *Config) *Client {
+func Get(cnf *Config) Client {
 	if instance == nil || instance.IsConnected() == false {
 		instance = create(cnf.ClientId, cnf.Password, cnf.Server)
 	}
-	return &instance
+	return instance
 }
 
 func (c *client) Init() bool {
@@ -123,7 +123,7 @@ func (c *client) Init() bool {
 		if c.connectionLostHandler != nil {
 			cl.Disconnect(0)
 			createClient(c, options)
-			c.connectionLostHandler(cl, err)
+			c.connectionLostHandler(c, err)
 		}
 	}
 	options.OnReconnecting = func(c mqtt.Client, options *mqtt.ClientOptions) {
