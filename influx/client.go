@@ -3,12 +3,12 @@ package influx
 import (
 	"context"
 	"fmt"
-	"github.com/influxdata/influxdb-client-go/v2"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"path/filepath"
-	"sailing.cn/utils"
+	path2 "sailing.cn/v2/path"
 	"time"
 )
 
@@ -24,7 +24,7 @@ type config struct {
 
 func (conf *InfluxConfig) Init(path string) {
 	if len(path) == 0 {
-		path = filepath.Join(utils.GetExecPath(), "conf.d", "conf.yml")
+		path = filepath.Join(path2.GetExecPath(), "conf.d", "conf.yml")
 	}
 	file, err := ioutil.ReadFile(path)
 	if err != nil {

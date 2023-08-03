@@ -9,7 +9,9 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang/glog v1.1.0
 	github.com/imroc/req/v3 v3.39.0
+	github.com/influxdata/influxdb-client-go/v2 v2.12.3
 	github.com/mitchellh/mapstructure v1.5.0
+	github.com/rabbitmq/amqp091-go v1.5.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
@@ -34,6 +36,7 @@ require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/deepmap/oapi-codegen v1.8.2 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gaukas/godicttls v0.0.4 // indirect
@@ -58,6 +61,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/influxdata/line-protocol v0.0.0-20200327222509-2487e7298839 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -73,6 +77,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.11.0 // indirect
 	github.com/openzipkin/zipkin-go v0.4.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/qtls-go1-20 v0.3.0 // indirect
 	github.com/quic-go/quic-go v0.37.0 // indirect
