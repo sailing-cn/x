@@ -47,11 +47,13 @@ func NewConfig(paths ...string) *ConnConfig {
 			log.Panicf("读取配置文件错误:%s", err.Error())
 		}
 	}
-	cfg := &ConnConfig{}
-	err := viper.Unmarshal(cfg)
-	if err != nil {
-		log.Panicf("解析配置文件错误:%s", err.Error())
-		panic(1)
+	cfg := &ConnConfig{
+		Host:          viper.GetString("amqp.host"),
+		Port:          viper.GetInt("amqp.port"),
+		User:          viper.GetString("amqp.user"),
+		Password:      viper.GetString("amqp.password"),
+		Vhost:         viper.GetString("amqp.vhost"),
+		PrefetchCount: viper.GetInt("amqp.prefetch_count"),
 	}
 	return cfg
 }
