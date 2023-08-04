@@ -7,6 +7,7 @@ require (
 	github.com/eclipse/paho.mqtt.golang v1.4.3
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-gonic/gin v1.9.1
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golang/glog v1.1.0
 	github.com/imroc/req/v3 v3.39.0
 	github.com/influxdata/influxdb-client-go/v2 v2.12.3

@@ -206,3 +206,7 @@ func GetTopicDeviceId(topic string) string {
 	//$oc/devices/1458634485842055168_1/sys/properties/report
 	return strings.Split(topic, "/")[2]
 }
+
+func GetTopicRequestId(topic string) string {
+	return strings.Split(topic, "=")[1]
+}

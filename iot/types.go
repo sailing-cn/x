@@ -233,3 +233,180 @@ type ServiceEvent struct {
 	EventTime int64       `json:"event_time"`
 	Paras     interface{} `json:"paras"` // 不同类型的请求paras使用的结构体不同
 }
+
+// SubDeviceInfo 子设备信息
+type SubDeviceInfo struct {
+	ParentDeviceId string      `json:"parent_device_id,omitempty"`
+	Type           string      `json:"type,omitempty"`
+	NodeId         string      `json:"node_id,omitempty"`
+	DeviceId       string      `json:"device_id,omitempty"`
+	Name           string      `json:"name,omitempty"`
+	Description    string      `json:"description,omitempty"`
+	ManufacturerId string      `json:"manufacturer_id,omitempty"`
+	Model          string      `json:"model,omitempty"`
+	ProductId      string      `json:"product_id"`
+	FwVersion      string      `json:"fw_version,omitempty"`
+	SwVersion      string      `json:"sw_version,omitempty"`
+	Status         string      `json:"status,omitempty"`
+	ExtensionInfo  interface{} `json:"extension_info,omitempty"`
+}
+
+// SubDevicesStatus 网关更新子设备状态
+type SubDevicesStatus struct {
+	DeviceStatuses []SubDeviceStatus `json:"device_statuses"`
+}
+
+// SubDeviceStatus 子设备状态
+type SubDeviceStatus struct {
+	DeviceId string `json:"device_id"`
+	Status   string `json:"status"` // 子设备状态。 OFFLINE：设备离线 ONLINE：设备上线
+}
+
+// DevicePropertyQueryRequest 设备属性查询请求
+type DevicePropertyQueryRequest struct {
+	DeviceId  string `json:"device_id"`
+	ServiceId string `json:"service_id"`
+}
+
+// DevicePropertyQueryResponse 设备属性查询响应
+type DevicePropertyQueryResponse struct {
+	ObjectDeviceId string             `json:"object_device_id"`
+	Shadow         []DeviceShadowData `json:"shadow"`
+}
+
+// DeviceShadowData 设备影子数据
+type DeviceShadowData struct {
+	ServiceId string                     `json:"service_id"`
+	Desired   DeviceShadowPropertiesData `json:"desired"`
+	Reported  DeviceShadowPropertiesData `json:"reported"`
+	Version   int                        `json:"version"`
+}
+
+// DeviceShadowPropertiesData 设备影子属性数据
+type DeviceShadowPropertiesData struct {
+	Properties interface{} `json:"properties"`
+	EventTime  string      `json:"event_time"`
+}
+
+// DevicePropertyDownRequest 平台设置设备属性
+type DevicePropertyDownRequest struct {
+	DeviceId string                            `json:"device_id"`
+	Services []DevicePropertyDownRequestEntity `json:"services"`
+}
+
+// DevicePropertyDownRequestEntity 设备属性设置请求详情
+type DevicePropertyDownRequestEntity struct {
+	ServiceId  string      `json:"service_id"`
+	Properties interface{} `json:"properties"`
+}
+
+// AddSubDeviceParas 子设备添加事件参数
+type AddSubDeviceParas struct {
+	Devices []SubDeviceInfo `json:"devices"`
+	Version int64           `json:"version"`
+}
+
+// DeleteSubDeviceParas 删除子设备事件参数
+type DeleteSubDeviceParas struct {
+	Devices []SubDeviceInfo `json:"devices"`
+	Version int64           `json:"version"`
+}
+
+// DeviceLog 设备日志
+type DeviceLog struct {
+	Timestamp string `json:"timestamp"` // 日志产生时间
+	Type      string `json:"type"`      // 日志类型：DEVICE_STATUS，DEVICE_PROPERTY ，DEVICE_MESSAGE ，DEVICE_COMMAND
+	Content   string `json:"content"`   // 日志内容
+}
+
+// BaseServiceEvent 服务事件--基础信息
+type BaseServiceEvent struct {
+	ServiceId string `json:"service_id"`
+	EventType string `json:"event_type"`
+	EventTime int64  `json:"event_time,omitempty"`
+}
+
+type FileRequestServiceEvent struct {
+	BaseServiceEvent
+	Paras FileRequestServiceEventParas `json:"paras"`
+}
+
+// FileResultResponse 文件操作响应结果
+type FileResultResponse struct {
+	ObjectDeviceId string                           `json:"object_device_id"`
+	Services       []FileResultResponseServiceEvent `json:"services"`
+}
+
+// FileRequestServiceEventParas 设备获取文件上传下载URL参数
+type FileRequestServiceEventParas struct {
+	FileName       string      `json:"file_name"`
+	FileAttributes interface{} `json:"file_attributes"`
+}
+
+// FileResultResponseServiceEvent 文件操作事件响应结果
+type FileResultResponseServiceEvent struct {
+	BaseServiceEvent
+	Paras FileResultServiceEventParas `json:"paras"`
+}
+
+// FileResultServiceEventParas 上报文件上传下载结果参数
+type FileResultServiceEventParas struct {
+	ObjectName        string `json:"object_name"`
+	ResultCode        int    `json:"result_code"`
+	StatusCode        int    `json:"status_code"`
+	StatusDescription string `json:"status_description"`
+}
+
+// FileResponseServiceEventParas 平台下发响应参数
+type FileResponseServiceEventParas struct {
+	Url            string      `json:"url"`
+	BucketName     string      `json:"bucket_name"`
+	ObjectName     string      `json:"object_name"`
+	Expire         int         `json:"expire"`
+	FileAttributes interface{} `json:"file_attributes"`
+}
+
+// FileRequest 设备获取文件上传下载请求体
+type FileRequest struct {
+	ObjectDeviceId string                    `json:"object_device_id"`
+	Services       []FileRequestServiceEvent `json:"services"`
+}
+
+// FileResponse 平台下发文件上传和下载URL响应
+type FileResponse struct {
+	ObjectDeviceId string                     `json:"object_device_id"`
+	Services       []FileResponseServiceEvent `json:"services"`
+}
+type FileResponseServiceEvent struct {
+	BaseServiceEvent
+	Paras FileResponseServiceEventParas `json:"paras"`
+}
+
+// ReportDeviceLogServiceEvent 设备日志上报事件
+type ReportDeviceLogServiceEvent struct {
+	BaseServiceEvent
+	Paras DeviceLog `json:"paras,omitempty"`
+}
+
+// ReportDeviceLogRequest 上报设备日志请求
+type ReportDeviceLogRequest struct {
+	Services []ReportDeviceLogServiceEvent `json:"services,omitempty"`
+}
+
+type ReportDeviceInfoServiceEvent struct {
+	BaseServiceEvent
+	Paras ReportDeviceInfoEventParas `json:"paras,omitempty"`
+}
+
+// ReportDeviceInfoEventParas 设备信息上报请求参数
+type ReportDeviceInfoEventParas struct {
+	DeviceSdkVersion string `json:"device_sdk_version,omitempty"`
+	SwVersion        string `json:"sw_version,omitempty"`
+	FwVersion        string `json:"fw_version,omitempty"`
+}
+
+// ReportDeviceInfoRequest 上报设备信息请求
+type ReportDeviceInfoRequest struct {
+	DeviceId string                         `json:"device_id,omitempty"`
+	Services []ReportDeviceInfoServiceEvent `json:"services,omitempty"`
+}

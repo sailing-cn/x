@@ -13,12 +13,12 @@ var (
 // GrpcConfig GRPC服务配置
 type GrpcConfig struct {
 	Grpc struct {
-		Name    string `json:"name"`                     //服务名称
-		Addr    string `json:"addr"`                     //监听地址
-		Port    int    `json:"port"`                     //监听端口
-		Version string `json:"version"`                  //版本
-		MaxSend int    `json:"max_send" yaml:"max_send"` //最大发送字节
-		MaxRecv int    `json:"max_recv" yaml:"max_recv"` //最大接收字节
+		Name    string `json:"name"`                                             //服务名称
+		Addr    string `json:"addr"`                                             //监听地址
+		Port    int    `json:"port"`                                             //监听端口
+		Version string `json:"version"`                                          //版本
+		MaxSend int    `json:"max_send" yaml:"max_send" mapstructure:"max_send"` //最大发送字节
+		MaxRecv int    `json:"max_recv" yaml:"max_recv" mapstructure:"max_recv"` //最大接收字节
 	} `json:"grpc"` //grpc 配置项
 	Services map[string]string `json:"services"` //依赖服务配置项
 }
