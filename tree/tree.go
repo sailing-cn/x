@@ -25,6 +25,9 @@ func (l ByLevel) Less(i, j int) bool { return l[i].Level < l[j].Level }
 
 func (t *TreeResult) ToTree() *TreeResult {
 	result := &TreeResult{}
+	if t.Nodes == nil || len(t.Nodes) <= 0 {
+		return result
+	}
 	temp := make(map[string]*TreeNode)
 	topLevel := getTopLevel(t.Nodes)
 	for len(temp) < len(t.Nodes) {
