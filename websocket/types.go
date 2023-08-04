@@ -5,6 +5,13 @@ import (
 	"sync"
 )
 
+type Config struct {
+	Websocket struct {
+		Addr string `yaml:"addr" mapstructure:"addr"`
+		Port int    `yaml:"port" mapstructure:"port"`
+	} `json:"websocket" yaml:"websocket" mapstructure:"websocket"`
+}
+
 // Client 单个客户端信息
 type Client struct {
 	Id, Group string
