@@ -20,7 +20,7 @@ func NewServeCmd(listener ServerListener) *cobra.Command {
 		Short: "启用 http/2 grpc server",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, cancel = context.WithCancel(context.Background())
-			apmConf := apm.NewConfig()
+			apmConf := apm.NewGrpcConfig()
 			provider := apm.NewTracer(apmConf)
 			defer provider(ctx)
 			utils.Welcome()

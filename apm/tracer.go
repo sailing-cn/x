@@ -24,7 +24,7 @@ type Config struct {
 }
 
 // NewConfig 创建一个链路追踪配置--默认路径 ./conf.d/conf.yml
-func NewConfig(paths ...string) *Config {
+func NewGrpcConfig(paths ...string) *Config {
 	viper.AddConfigPath("./conf.d")
 	viper.SetConfigName("conf")
 	err := viper.ReadInConfig()
@@ -34,6 +34,22 @@ func NewConfig(paths ...string) *Config {
 	conf := &Config{
 		Service:  viper.GetString("grpc.name"),
 		Version:  viper.GetString("grpc.version"),
+		Exporter: viper.GetString("apm.exporter"),
+		Host:     viper.GetString("apm.host"),
+	}
+	return conf
+}
+
+func NewWebapiConfig(paths ...string) *Config {
+	viper.AddConfigPath("./conf.d")
+	viper.SetConfigName("conf")
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic("读取配置文件出错:" + err.Error())
+	}
+	conf := &Config{
+		Service:  viper.GetString("webapi.name"),
+		Version:  viper.GetString("webapi.version"),
 		Exporter: viper.GetString("apm.exporter"),
 		Host:     viper.GetString("apm.host"),
 	}

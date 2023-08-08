@@ -7,7 +7,9 @@ import (
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 	"net/http"
+	"sailing.cn/v2/apm"
 	"sailing.cn/v2/conf"
 )
 
@@ -74,6 +76,15 @@ func WithCors() Option {
 			}
 			c.Next()
 		})
+		return nil
+	}
+}
+
+// WithTrace 开启链路追踪
+func WithTrace() Option {
+	return func(e *Engine) error {
+		apm.NewTracer(apm.NewWebapiConfig())
+		e.Use(otelgin.Middleware(fmt.Sprintf("%s %s", e.cfg.Webapi.Name, e.cfg.Webapi.Version)))
 		return nil
 	}
 }
