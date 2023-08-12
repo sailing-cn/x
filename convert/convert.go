@@ -2,6 +2,7 @@ package convert
 
 import (
 	"encoding/json"
+	log "github.com/sirupsen/logrus"
 	"strconv"
 	"strings"
 	"time"
@@ -62,4 +63,14 @@ func ToTimestamp(str string) int64 {
 		result = time.Date(year, time.Month(month), day, hour, min, sec, 0, time.Local).Unix()
 	}
 	return result
+}
+
+func ToModel[T interface{}](bytes []byte) *T {
+	var result T
+	err := json.Unmarshal(bytes, &result)
+	if err != nil {
+		log.Errorf("数据转换失败:%s", err.Error())
+		return nil
+	}
+	return &result
 }
