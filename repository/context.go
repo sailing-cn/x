@@ -8,6 +8,7 @@ import (
 	"gorm.io/plugin/opentelemetry/tracing"
 	"sailing.cn/v2/repository/conf"
 	"sailing.cn/v2/repository/mysql"
+	"sailing.cn/v2/repository/sqlite"
 )
 
 var (
@@ -86,8 +87,8 @@ func newDb() {
 	//case "clickhouse":
 	//	instance.DB = ch.NewClickHouse(cfg)
 	//	break
-	//case "sqlite":
-	//	instance.DB = sqlite.NewSqlite(cfg)
+	case "sqlite":
+		instance.DB = sqlite.NewSqlite(cfg)
 	//case "dm":
 	//	instance.DB = dm.NewDm(cfg)
 	//case "postgres", "pgsql":
