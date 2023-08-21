@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/plugin/opentelemetry/tracing"
 	"sailing.cn/v2/repository/conf"
+	"sailing.cn/v2/repository/dm"
 	"sailing.cn/v2/repository/mysql"
 	"sailing.cn/v2/repository/sqlite"
 )
@@ -89,8 +90,10 @@ func newDb() {
 	//	break
 	case "sqlite":
 		instance.DB = sqlite.NewSqlite(cfg)
-	//case "dm":
-	//	instance.DB = dm.NewDm(cfg)
+		break
+	case "dm":
+		instance.DB = dm.NewDm(cfg)
+		break
 	//case "postgres", "pgsql":
 	//	instance.DB = postgres.NewPostgres(cfg)
 	default:
