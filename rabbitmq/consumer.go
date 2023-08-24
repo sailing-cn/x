@@ -58,6 +58,7 @@ func (r *rabbit) subscribe(ctx context.Context, config ConsumeConfig, handle fun
 			if config.ExecuteConcurrent {
 				go func() {
 					handle(&msg)
+					msg.Ack(true)
 					r.wgChannel.Done()
 				}()
 			} else {
