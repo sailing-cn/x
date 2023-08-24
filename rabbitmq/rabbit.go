@@ -1,6 +1,7 @@
 package rabbitmq
 
 import (
+	"errors"
 	amqp "github.com/rabbitmq/amqp091-go"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -40,11 +41,10 @@ func NewConfig(paths ...string) *ConnConfig {
 		}
 	}
 	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+		var configFileNotFoundError viper.ConfigFileNotFoundError
+		if errors.As(err, &configFileNotFoundError) {
 			log.Panicf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml")
 			panic(1)
-		} else {
-			log.Panicf("读取配置文件错误:%s", err.Error())
 		}
 	}
 	cfg := &ConnConfig{
