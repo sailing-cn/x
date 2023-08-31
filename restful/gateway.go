@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"sailing.cn/v2/apm"
 	"sailing.cn/v2/conf"
+	"sailing.cn/v2/restful/jwt"
 )
 
 // Engine 网关引擎
@@ -85,6 +86,13 @@ func WithTrace() Option {
 	return func(e *Engine) error {
 		apm.NewTracer(apm.NewWebapiConfig())
 		e.Use(otelgin.Middleware(fmt.Sprintf("%s %s", e.cfg.Webapi.Name, e.cfg.Webapi.Version)))
+		return nil
+	}
+}
+
+func WithJWT() Option {
+	return func(e *Engine) error {
+		jwt.InitJWKS(e.cfg.Webapi.Authority)
 		return nil
 	}
 }

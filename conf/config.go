@@ -26,12 +26,13 @@ type GrpcConfig struct {
 // WebapiConfig WEBAPI配置
 type WebapiConfig struct {
 	Webapi struct {
-		Name    string `json:"name"`    //网关名称
-		Addr    string `json:"addr"`    //监听地址
-		Port    int    `json:"port"`    //监听端口
-		Version string `json:"version"` //版本
-		Prefix  string `json:"prefix"`  //路由前缀
-		Mode    string `json:"mode"`    //模式 dev:开发模式
+		Name      string `json:"name"`      //网关名称
+		Addr      string `json:"addr"`      //监听地址
+		Port      int    `json:"port"`      //监听端口
+		Version   string `json:"version"`   //版本
+		Prefix    string `json:"prefix"`    //路由前缀
+		Mode      string `json:"mode"`      //模式 dev:开发模式
+		Authority string `json:"authority"` //授权地址
 	} `json:"webapi"` //api配置项
 	Services map[string]string `json:"services"` //依赖服务配置项
 }

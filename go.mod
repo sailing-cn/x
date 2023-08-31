@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	gitee.com/chunanyong/dm v1.8.12
+	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/eclipse/paho.mqtt.golang v1.4.3
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
@@ -60,6 +61,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/golang-jwt/jwt/v5 v5.0.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
