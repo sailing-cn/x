@@ -59,6 +59,11 @@ func Init() {
 	cfg = NewConfig()
 }
 
+// InitWithConfig 初始化数据库连接
+func InitWithConfig(c *conf.Config) {
+	cfg = c
+}
+
 // Get 获取数据库连接实例
 func Get() *DbContext {
 	if instance == nil || instance.DB == nil {
