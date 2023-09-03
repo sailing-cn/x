@@ -4,6 +4,7 @@ import (
 	"errors"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"path/filepath"
 )
 
 var (
@@ -50,8 +51,9 @@ func NewWebapiConfig(paths ...string) *WebapiConfig {
 		}
 	}
 	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			log.Panicf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml")
+		var configFileNotFoundError viper.ConfigFileNotFoundError
+		if errors.Is(err, configFileNotFoundError) {
+			log.Panicf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml 绝对路径:%s", filepath.Base("./conf.d/conf.yml"))
 			panic(1)
 		} else {
 			log.Panicf("读取配置文件错误:%s", err.Error())
@@ -79,11 +81,10 @@ func NewGrpcConfig(paths ...string) *GrpcConfig {
 		}
 	}
 	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+		var configFileNotFoundError viper.ConfigFileNotFoundError
+		if errors.Is(err, configFileNotFoundError) {
 			log.Panicf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml")
 			panic(1)
-		} else {
-			log.Panicf("读取配置文件错误:%s", err.Error())
 		}
 	}
 	cfg := &GrpcConfig{}
@@ -108,8 +109,8 @@ func NewConf[T interface{}](paths ...string) (*T, error) {
 	}
 	if err := viper.ReadInConfig(); err != nil {
 		var configFileNotFoundError viper.ConfigFileNotFoundError
-		if errors.As(err, &configFileNotFoundError) {
-			log.Panicf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml")
+		if errors.Is(err, configFileNotFoundError) {
+			log.Errorf("找不到配置文件,请检查配置文件路径是否正确,默认路径 ./conf.d/conf.yml 绝对路径:%s", filepath.Base("./conf.d/conf.yml"))
 			panic(1)
 		}
 	}
