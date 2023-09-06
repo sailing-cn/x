@@ -247,6 +247,18 @@ func (manager *Manager) Cleanup(duration time.Duration) {
 	}
 }
 
+func (manager *Manager) Shutdown() {
+	if manager.clientCount > 0 {
+		for _, group := range manager.group {
+			for _, client := range group {
+				if client.errCount > 10 {
+					manager.UnRegister <- client
+				}
+			}
+		}
+	}
+}
+
 // SetHandle 设置消息处理
 func (manager *Manager) SetHandle(handle func(c *Client, message []byte)) {
 	manager.handle = handle
