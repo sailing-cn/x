@@ -86,6 +86,7 @@ func (manager *Manager) Start() {
 		case client := <-manager.UnRegister:
 			manager.lock.Lock()
 			delete(manager.group[client.Group], client.Id)
+			manager.clientCount--
 			manager.lock.Unlock()
 			log.Printf("客户端 [%s] 从群组 [%s] 中注销", client.Id, client.Group)
 		}
