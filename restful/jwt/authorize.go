@@ -17,7 +17,7 @@ var JWKS *keyfunc.JWKS
 
 func InitJWKS(url string) {
 	if len(url) <= 0 {
-		log.Fatalf("授权地址未配置")
+		log.Fatalf("认证地址未配置")
 		return
 	}
 	url = fmt.Sprintf("%s/.well-known/openid-configuration/jwks", url)
