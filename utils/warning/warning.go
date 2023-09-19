@@ -6,8 +6,8 @@ import (
 )
 
 type Warning struct {
-	Detail string
-	Code   uint32
+	Detail string `json:"detail"`
+	Code   uint32 `json:"code"`
 }
 
 func (w Warning) Error() string {
