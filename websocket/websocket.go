@@ -132,7 +132,7 @@ func (manager *Manager) Broadcast() {
 	}
 }
 
-// Deprecated
+// SendToClient Deprecated 下个版本中将放弃
 func (manager *Manager) SendToClient(id string, group string, message []byte) {
 	data := &MessageData{
 		Id: id, Group: group, Message: message,
@@ -154,13 +154,14 @@ func (manager *Manager) SendToClient2(id string, group string, message interface
 	manager.message <- data
 }
 
-// Deprecated
+// SendToGroup Deprecated 下个版本中将放弃
 func (manager *Manager) SendToGroup(group string, message []byte) {
 	data := &GroupMessageData{
 		Group: group, Message: message,
 	}
 	manager.groupMessage <- data
 }
+
 func (manager *Manager) SendToGroup2(group string, message interface{}) {
 
 	data := &GroupMessageData{Group: group}
@@ -198,6 +199,7 @@ func (manager *Manager) UnRegisterClient(client *Client) {
 func (manager *Manager) GroupCount() uint {
 	return manager.groupCount
 }
+
 func (manager *Manager) ClientCount() uint {
 	return manager.clientCount
 }
@@ -263,4 +265,15 @@ func (manager *Manager) Shutdown() {
 // SetHandle 设置消息处理
 func (manager *Manager) SetHandle(handle func(c *Client, message []byte)) {
 	manager.handle = handle
+}
+
+func (manager *Manager) FindClient(clientId string) *Client {
+	for _, group := range manager.group {
+		for _, client := range group {
+			if client.Id == clientId {
+				return client
+			}
+		}
+	}
+	return nil
 }
