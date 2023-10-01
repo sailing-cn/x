@@ -1,6 +1,9 @@
 package utils
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/zztroot/color"
+)
 
 // Welcome 打印欢迎信息
 func Welcome() {
@@ -17,5 +20,5 @@ func Welcome() {
      /__/:/       \  \:\         \__\/       \__\/         \__\/      \  \:\        \  \::/   
      \__\/         \__\/                                               \__\/         \__\/    
 `
-	fmt.Println(str)
+	fmt.Println(color.Coat(str, color.Green))
 }
