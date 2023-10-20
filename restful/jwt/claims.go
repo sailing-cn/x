@@ -7,8 +7,12 @@ const (
 	EmployeeId = "employee_id" //员工标识
 	AccountId  = "sub"         //账户标识
 	Name       = "name"        //
+	AppCode    = "app_code"    // 应用编码
+	AppName    = "app_name"    // 应用名称
+	AppId      = "app_id"
 )
 
 var (
-	CLAIMS []string = []string{Tenant, TenantId, TenantCode, EmployeeId, AccountId, Name}
+	CLAIMS []string = []string{Tenant, TenantId, TenantCode,
+		EmployeeId, AccountId, Name, AppCode, AppName, AppId}
 )
