@@ -28,8 +28,8 @@ type QueueCreator interface {
 }
 
 type Producer interface {
-	Publish(exchange string, routingKey string, body interface{}) (err error)
-	PublishDelay(exchange string, routingKey string, delay int, body interface{}) (err error)
+	Publish(ctx context.Context, exchange string, routingKey string, body interface{}) (err error)
+	PublishDelay(ctx context.Context, exchange string, routingKey string, delay int, body interface{}) (err error)
 }
 
 type Consumer interface {
