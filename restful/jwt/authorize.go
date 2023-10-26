@@ -21,7 +21,7 @@ func InitJWKS(url string) {
 		return
 	}
 	url = fmt.Sprintf("%s/.well-known/openid-configuration/jwks", url)
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, _ := context.WithCancel(context.Background())
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
@@ -31,8 +31,8 @@ func InitJWKS(url string) {
 		RefreshErrorHandler: func(err error) {
 			log.Printf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
 		},
-		RefreshInterval:   time.Hour,
-		RefreshRateLimit:  time.Minute * 5,
+		RefreshInterval: time.Minute,
+		//RefreshRateLimit:  time.Minute * 5,
 		RefreshTimeout:    time.Second * 10,
 		RefreshUnknownKID: true,
 		Client:            client,
@@ -41,8 +41,8 @@ func InitJWKS(url string) {
 	if err != nil {
 		log.Fatalf("Failed to create JWKS from resource at the given URL.\nError: %s", err.Error())
 	}
-	cancel()
-	jwks.EndBackground()
+	//cancel()
+	//jwks.EndBackground()
 	JWKS = jwks
 }
 

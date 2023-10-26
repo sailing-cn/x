@@ -12,6 +12,7 @@ import (
 	"sailing.cn/v2/apm"
 	"sailing.cn/v2/conf"
 	"sailing.cn/v2/restful/jwt"
+	"time"
 )
 
 // Engine 网关引擎
@@ -93,6 +94,21 @@ func WithTrace() Option {
 func WithJWT() Option {
 	return func(e *Engine) error {
 		jwt.InitJWKS(e.cfg.Webapi.Authority)
+		return nil
+	}
+}
+
+func WithRetryJWT(duration time.Duration) Option {
+	return func(e *Engine) error {
+		go func() {
+			timer := time.Tick(time.Second * duration)
+			select {
+			case <-timer:
+				{
+					jwt.InitJWKS(e.cfg.Webapi.Authority)
+				}
+			}
+		}()
 		return nil
 	}
 }
