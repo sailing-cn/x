@@ -10,9 +10,10 @@ const (
 	AppCode    = "app_code"    // 应用编码
 	AppName    = "app_name"    // 应用名称
 	AppId      = "app_id"
+	FamilyName = "family_name" //
 )
 
 var (
 	CLAIMS []string = []string{Tenant, TenantId, TenantCode,
-		EmployeeId, AccountId, Name, AppCode, AppName, AppId}
+		EmployeeId, AccountId, Name, AppCode, AppName, AppId, FamilyName}
 )
