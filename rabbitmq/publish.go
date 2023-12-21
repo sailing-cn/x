@@ -28,7 +28,7 @@ func publish(ctx context.Context, r *rabbit, body interface{}, config PublishCon
 	r.wgChannel.Add(1)
 	defer r.wgChannel.Done()
 	_bytes, _ := json.Marshal(body)
-	if e := r.chConsumer.ExchangeDeclare(config.Exchange, amqp.ExchangeTopic, true, false, false, false, nil); e != nil {
+	if e := r.chConsumer.ExchangeDeclare(config.Exchange, amqp.ExchangeDirect, true, false, false, false, nil); e != nil {
 		log.Errorf("定义exchange %s 失败", config.Exchange)
 	}
 	if _, e := r.CreateQueue(QueueConfig{Name: config.RoutingKey, Durable: true}); e != nil {
