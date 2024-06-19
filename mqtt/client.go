@@ -106,6 +106,10 @@ func Get(cnf *Config) Client {
 	return instance
 }
 
+func NewClient(cnf *Config) Client {
+	return create(cnf.ClientId, cnf.Password, cnf.Server)
+}
+
 func (c *client) Init() bool {
 	options := mqtt.NewClientOptions()
 	options.AddBroker(c.Server)
